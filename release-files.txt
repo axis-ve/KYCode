@@ -4,6 +4,7 @@ CONTRIBUTING.md
 INSTALL.txt
 LICENSE
 README.md
+assets/logo.svg
 evals/README.md
 evals/check_fixture.py
 evals/fixtures/checkout/cart.py

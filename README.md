@@ -22,10 +22,11 @@ Follow it from the button to storage. Don't change any files.
 ```
 
 Replace "Save" with an action in your app. Codex needs access to the project files.
+Expect a walkthrough of the relevant code, with file references and a way to check what happens.
 
 ## What it does
 
-KYCode gives Codex instructions to work from your code and check its explanations against evidence:
+The skill gives Codex instructions to work from your code and check its explanations against evidence:
 
 - Trace a user action through the relevant functions, requests, and stored data.
 - Investigate a bug using source code, logs, and reproducible behavior.
@@ -59,9 +60,7 @@ Wait for my answer before explaining.
 
 ## Contribute
 
-Read the [skill instructions](skills/know-your-code/SKILL.md), run the [repository checks](CONTRIBUTING.md#check-a-change), or try the [behavioral evaluation cases](evals/README.md). Repository checks cover packaging and fixtures; the evaluation cases require a Codex session.
-
-See [Contributing](CONTRIBUTING.md) to report a problem or propose a change.
+Read the [skill instructions](skills/know-your-code/SKILL.md), try the [behavioral evaluation cases](evals/README.md), or see [Contributing](CONTRIBUTING.md) to report a problem and run the repository checks.
 
 ## License
 

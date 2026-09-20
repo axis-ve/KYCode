@@ -17,13 +17,17 @@ KYCode helps you work through those questions in your own project. It guides Cod
 Paste this into a Codex task:
 
 ```text
-$skill-installer Install the skill from https://github.com/axis-ve/KYCode/tree/main/skills/know-your-code
+$skill-installer
+Install the skill from:
+https://github.com/axis-ve/KYCode/tree/main/skills/know-your-code
 ```
 
 Open the project you want to work on, then start with one question:
 
 ```text
-$know-your-code What happens when I press Save? Follow it from the button to storage. Don't change anything yet.
+$know-your-code
+What happens when I press Save?
+Follow it from the button to storage. Don't change anything yet.
 ```
 
 Replace "Save" with an action from your app. Codex needs access to the project files. If the skill does not appear after installation, restart Codex.
@@ -42,7 +46,9 @@ Replace "Save" with an action from your app. Codex needs access to the project f
 Describe what happened and what you expected:
 
 ```text
-$know-your-code My edits disappear after a refresh. Find out why before proposing a fix.
+$know-your-code
+My edits disappear after a refresh.
+Find out why before proposing a fix.
 ```
 
 KYCode should connect the symptom to evidence and explain how to check the cause. If the evidence is incomplete, it should say what is still unknown.
@@ -50,7 +56,9 @@ KYCode should connect the symptom to evidence and explain how to check the cause
 ### Learn through a change you need
 
 ```text
-$know-your-code Add a confirmation before deleting a document. Test it, then show me where I'd change the message.
+$know-your-code
+Add a confirmation before deleting a document.
+Test it, then show me where I'd change the message.
 ```
 
 You get help with the change and an explanation of the code you will maintain. Asking for an explanation keeps the work read-only; asking for a fix or feature lets Codex make that change.
@@ -62,7 +70,8 @@ Say "less jargon," "go deeper," or "just fix it" as you go. You can take a detou
 For practice, ask:
 
 ```text
-Ask me one question about the code we just looked at. Wait for my answer before explaining.
+Ask me one question about the code we just looked at.
+Wait for my answer before explaining.
 ```
 
 Practice is optional. You can keep working without quizzes or a fixed lesson plan.

@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="assets/logo.svg" alt="Know Your Code" width="80" height="80">
-</p>
+![Know Your Code. Your code. Your aha. A skill for Codex.](assets/cover.png)
 
 <h1 align="center">Know Your Code</h1>
 

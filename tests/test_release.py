@@ -1,7 +1,9 @@
 import importlib.util
 from pathlib import Path
 import tempfile
+import struct
 import unittest
+import zlib
 from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -11,6 +13,20 @@ spec.loader.exec_module(release)
 
 
 class ReleaseChecks(unittest.TestCase):
+    def test_cover_is_accepted_but_metadata_and_trailing_data_are_rejected(self):
+        cover = (ROOT / 'assets/cover.png').read_bytes()
+        self.assertEqual(release.findings(cover), [])
+        self.assertEqual(struct.unpack('>II', cover[16:24]), (3840, 1280))
+        for kind in (b'tEXt', b'zTXt', b'iTXt', b'eXIf'):
+            payload = b'private metadata'
+            chunk = (struct.pack('>I', len(payload)) + kind + payload
+                     + struct.pack('>I', zlib.crc32(kind + payload)))
+            with self.subTest(kind=kind), self.assertRaises(ValueError):
+                release.findings(cover[:-12] + chunk + cover[-12:])
+        for invalid in (cover + b'private data', cover[:-1], cover[:50] + b'x' + cover[51:]):
+            with self.assertRaises(ValueError):
+                release.findings(invalid)
+
     def test_all_public_content_passes(self):
         release.check(ROOT)
 

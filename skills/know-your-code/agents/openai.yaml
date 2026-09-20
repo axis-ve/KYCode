@@ -1,4 +1,7 @@
 interface:
   display_name: "Know Your Code"
-  short_description: "Understand your project and work through changes"
-  default_prompt: "Use $know-your-code to help me understand this project, starting with one real user action."
+  short_description: "Trace features, investigate bugs, and understand your code"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  brand_color: "#244BFF"
+  default_prompt: "Use $know-your-code to trace one user action through my project, show the relevant code, and explain how to check what happens without changing files."

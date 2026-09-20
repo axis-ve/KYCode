@@ -4,6 +4,7 @@ CONTRIBUTING.md
 INSTALL.txt
 LICENSE
 README.md
+assets/cover.png
 assets/logo.svg
 evals/README.md
 evals/check_fixture.py
@@ -20,5 +21,6 @@ scripts/release_check.py
 skills/know-your-code/LICENSE
 skills/know-your-code/SKILL.md
 skills/know-your-code/agents/openai.yaml
+skills/know-your-code/assets/logo.svg
 tests/test_release.py
 tests/test_repository.py

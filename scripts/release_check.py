@@ -3,8 +3,10 @@ import argparse
 from pathlib import Path
 import re
 import shutil
+import struct
 import subprocess
 import sys
+import zlib
 from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -16,9 +18,38 @@ RULES = {
 
 
 def findings(data):
+    if data.startswith(b'\x89PNG\r\n\x1a\n'):
+        check_png(data)
+        return []
     text = data.decode('utf-8')
     return [(number, kind) for number, line in enumerate(text.splitlines(), 1)
             for kind, pattern in RULES.items() if pattern.search(line)]
+
+
+def check_png(data):
+    """Allow image data and fixed-format color fields, but no embedded metadata."""
+    offset = 8
+    kinds = []
+    fixed_sizes = {b'IHDR': 13, b'sRGB': 1, b'gAMA': 4, b'cHRM': 32, b'IEND': 0}
+    while offset + 12 <= len(data):
+        size = struct.unpack('>I', data[offset:offset + 4])[0]
+        kind = data[offset + 4:offset + 8]
+        end = offset + 12 + size
+        if end > len(data):
+            raise ValueError('Truncated PNG chunk')
+        if kind != b'IDAT' and (kind not in fixed_sizes or size != fixed_sizes[kind]):
+            raise ValueError('PNG contains unsupported chunks or metadata')
+        checksum = struct.unpack('>I', data[end - 4:end])[0]
+        if zlib.crc32(data[offset + 4:end - 4]) != checksum:
+            raise ValueError('Invalid PNG checksum')
+        kinds.append(kind)
+        offset = end
+        if kind == b'IEND':
+            break
+    if (offset != len(data) or not kinds or kinds[0] != b'IHDR'
+            or kinds[-1] != b'IEND' or b'IDAT' not in kinds
+            or kinds.count(b'IHDR') != 1):
+        raise ValueError('Invalid PNG structure or trailing data')
 
 
 def public_files(root):

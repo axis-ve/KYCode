@@ -30,7 +30,7 @@ class PackageChecks(unittest.TestCase):
                 files = [path for path in SKILL.rglob('*') if path.is_file()]
                 self.assertEqual(set(archive.namelist()), {
                     'know-your-code/SKILL.md', 'know-your-code/LICENSE',
-                    'know-your-code/agents/openai.yaml', 'INSTALL.txt',
+                    'know-your-code/agents/openai.yaml', 'know-your-code/assets/logo.svg', 'INSTALL.txt',
                 })
                 for path in files:
                     self.assertEqual(archive.read(path.relative_to(SKILL.parent).as_posix()), path.read_bytes())
@@ -49,6 +49,11 @@ class PackageChecks(unittest.TestCase):
         ui = yaml.safe_load((SKILL / 'agents/openai.yaml').read_text())['interface']
         self.assertIn('$' + metadata['name'], ui['default_prompt'])
         self.assertTrue(25 <= len(ui['short_description']) <= 64)
+        for field in ('icon_small', 'icon_large'):
+            icon = (SKILL / ui[field]).resolve()
+            self.assertTrue(icon.is_relative_to(SKILL.resolve()))
+            self.assertTrue(icon.is_file())
+        self.assertRegex(ui['brand_color'], r'^#[0-9A-Fa-f]{6}$')
 
     def test_documentation_links_resolve_without_local_machine_paths(self):
         paths = [ROOT / 'README.md', ROOT / 'CONTRIBUTING.md']

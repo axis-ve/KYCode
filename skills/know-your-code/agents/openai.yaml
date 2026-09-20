@@ -1,0 +1,4 @@
+interface:
+  display_name: "Know Your Code"
+  short_description: "Understand your project and work through changes"
+  default_prompt: "Use $know-your-code to help me understand this project, starting with one real user action."

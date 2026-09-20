@@ -1,0 +1,13 @@
+.DS_Store
+website/
+brand/
+.agents/
+.env*
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+evals/runs/
+/release-copy/
+/scratch-checkout/
+/know-your-code.zip

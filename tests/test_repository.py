@@ -1,4 +1,5 @@
 import importlib.util
+import json
 from pathlib import Path
 import re
 import tempfile
@@ -37,6 +38,9 @@ class PackageChecks(unittest.TestCase):
                 installed = Path(directory) / 'project/.agents/skills'
                 archive.extractall(installed)
                 self.assertTrue((installed / 'know-your-code/SKILL.md').is_file())
+                cursor_installed = Path(directory) / 'project/.cursor/skills'
+                archive.extractall(cursor_installed)
+                self.assertTrue((cursor_installed / 'know-your-code/SKILL.md').is_file())
 
     def test_skill_metadata_and_license(self):
         text = (SKILL / 'SKILL.md').read_text()
@@ -54,6 +58,26 @@ class PackageChecks(unittest.TestCase):
             self.assertTrue(icon.is_relative_to(SKILL.resolve()))
             self.assertTrue(icon.is_file())
         self.assertRegex(ui['brand_color'], r'^#[0-9A-Fa-f]{6}$')
+
+    def test_cursor_plugin_discovers_the_same_skill(self):
+        plugin = json.loads((ROOT / '.cursor-plugin/plugin.json').read_text())
+        marketplace = json.loads((ROOT / '.cursor-plugin/marketplace.json').read_text())
+        self.assertEqual(plugin['name'], SKILL.name)
+        self.assertEqual(plugin['license'], 'MIT')
+        self.assertEqual((ROOT / plugin['logo']).read_bytes(), (SKILL / 'assets/logo.svg').read_bytes())
+        skills_root = (ROOT / plugin['skills']).resolve()
+        self.assertEqual(skills_root, SKILL.parent.resolve())
+        self.assertTrue((skills_root / SKILL.name / 'SKILL.md').is_file())
+        self.assertEqual(marketplace['name'], SKILL.name)
+        self.assertEqual([entry['name'] for entry in marketplace['plugins']], [SKILL.name])
+        self.assertEqual(marketplace['plugins'][0]['source'], '.')
+        readme = (ROOT / 'README.md').read_text()
+        self.assertIn('/know-your-code', readme)
+        self.assertIn('.cursor/skills', readme)
+        self.assertIn('$skill-installer', readme)
+        install = (ROOT / 'INSTALL.txt').read_text()
+        self.assertIn('.agents/skills/know-your-code/SKILL.md', install)
+        self.assertIn('.cursor/skills/know-your-code/SKILL.md', install)
 
     def test_documentation_links_resolve_without_local_machine_paths(self):
         paths = [ROOT / 'README.md', ROOT / 'CONTRIBUTING.md']
@@ -77,6 +101,8 @@ class FixtureChecks(unittest.TestCase):
             destination = Path(directory) / 'case'
             project = prepare(destination)
             self.assertEqual((project / '.agents/skills/know-your-code/SKILL.md').read_bytes(),
+                             (SKILL / 'SKILL.md').read_bytes())
+            self.assertEqual((project / '.cursor/skills/know-your-code/SKILL.md').read_bytes(),
                              (SKILL / 'SKILL.md').read_bytes())
             self.assertEqual(len((project / 'noisy.log').read_text().splitlines()), 82)
             check(project, 'buggy')

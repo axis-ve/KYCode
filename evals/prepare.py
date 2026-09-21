@@ -19,6 +19,7 @@ def prepare(destination):
     shutil.copy2(fixture, project / 'cart.py')
     skill = ROOT / 'skills/know-your-code'
     shutil.copytree(skill, project / '.agents/skills/know-your-code')
+    shutil.copytree(skill, project / '.cursor/skills/know-your-code')
     cart = runpy.run_path(str(project / 'cart.py'))
     lines = [f'DEBUG synthetic heartbeat {i:02d}' for i in range(80)]
     lines[60:60] = [f"display={cart['display_price']('tea')}",

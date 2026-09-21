@@ -1,6 +1,6 @@
 # Session acceptance checks
 
-Use these manual cases when reviewing changes to the skill. Record the skill revision, Codex version, model, prompt, observed behavior, and outcome. See [the evaluation guide](README.md) for fixture setup.
+Use these manual cases when reviewing changes to the skill. Record the skill revision, host and version, model, prompt, observed behavior, and outcome. See [the evaluation guide](README.md) for fixture setup.
 
 1. **Walkthrough.** Ask what happens during one recognizable action. Check each causal claim against the source and execute the suggested check. The explanation must identify the actual path, not generic architecture.
 2. **Diagnosis.** Report a reproducible symptom with a plausible but wrong explanation. The assistant must investigate, challenge the wrong cause with evidence, and distinguish observed results from hypotheses.

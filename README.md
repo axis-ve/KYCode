@@ -1,10 +1,12 @@
-![Know Your Code. Your code. Your aha. A skill for Codex.](assets/cover.png)
+![Know Your Code. Your code. Your aha. A skill for Codex and Cursor.](assets/cover.png)
 
 <h1 align="center">Know Your Code</h1>
 
-A Codex skill for understanding how your app works, finding why it breaks, and making changes you can maintain.
+A skill for understanding how your app works, finding why it breaks, and making changes you can maintain. It works in Codex and Cursor from the same instructions.
 
 ## Install
+
+### Codex
 
 Send this in Codex:
 
@@ -19,12 +21,34 @@ $know-your-code What happens when I press Save?
 Follow it from the button to storage. Don't change any files.
 ```
 
-Replace "Save" with an action in your app. Codex needs access to the project files.
+### Cursor
+
+Copy the skill into the project you want to understand:
+
+```sh
+mkdir -p .cursor/skills
+cp -r skills/know-your-code .cursor/skills/
+```
+
+For every local project, copy it to `~/.cursor/skills/know-your-code/` instead. To import the GitHub repository as a Cursor plugin, open Customize and choose From GitHub Repository:
+
+```text
+https://github.com/axis-ve/KYCode
+```
+
+Open your project in Cursor, then send:
+
+```text
+/know-your-code What happens when I press Save?
+Follow it from the button to storage. Don't change any files.
+```
+
+Replace "Save" with an action in your app. The host needs access to the project files.
 Expect a walkthrough of the relevant code, with file references and a way to check what happens.
 
 ## What it does
 
-The skill gives Codex instructions to work from your code and check its explanations against evidence:
+The skill gives the assistant instructions to work from your code and check its explanations against evidence:
 
 - Trace a user action through the relevant functions, requests, and stored data.
 - Investigate a bug using source code, logs, and reproducible behavior.
@@ -34,6 +58,8 @@ The skill gives Codex instructions to work from your code and check its explanat
 Exploration stays read-only unless you ask for changes. Say "less jargon," "go deeper," or "just fix it" to set the pace.
 
 ## Try it on your project
+
+In Codex, prefix prompts with `$know-your-code`. In Cursor, type `/know-your-code`.
 
 Investigate a symptom:
 
@@ -62,4 +88,4 @@ Read the [skill instructions](skills/know-your-code/SKILL.md), try the [behavior
 
 ## License
 
-[MIT](LICENSE). Independent project, not affiliated with OpenAI.
+[MIT](LICENSE). Independent project, not affiliated with OpenAI or Cursor.

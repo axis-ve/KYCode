@@ -1,3 +1,5 @@
+.cursor-plugin/marketplace.json
+.cursor-plugin/plugin.json
 .github/workflows/check.yml
 .gitignore
 CONTRIBUTING.md

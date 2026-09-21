@@ -1,6 +1,6 @@
 # Contribute
 
-For a bug report, include the prompt, expected behavior, observed behavior, and skill revision. Include the Codex host and model when known. Use a synthetic example or a minimal reproduction you can share. Remove credentials, private project code, machine paths, and personal information before posting an issue.
+For a bug report, include the prompt, expected behavior, observed behavior, and skill revision. Include the Codex or Cursor host and model when known. Use a synthetic example or a minimal reproduction you can share. Remove credentials, private project code, machine paths, and personal information before posting an issue.
 
 ## Check a change
 
@@ -15,7 +15,7 @@ python3 scripts/release_check.py
 
 On Windows, use `.venv\Scripts\python.exe` instead of `.venv/bin/python`.
 
-Repository tests check YAML, licenses, documentation links, download contents, privacy detection, and fixture arithmetic. They do not run Codex or validate voice. Follow the [evaluation guide](evals/README.md) for behavioral changes. Report failures as well as successes.
+Repository tests check YAML, licenses, documentation links, Cursor plugin manifests, download contents, privacy detection, and fixture arithmetic. They do not run Codex or Cursor or validate voice. Follow the [evaluation guide](evals/README.md) for behavioral changes. Report failures as well as successes.
 
 ## Keep the skill focused
 
@@ -35,4 +35,4 @@ Inspect the resulting files and ZIP. The scanner detects configured patterns, no
 
 To scan tracked files and reachable commits, run `python3 scripts/release_check.py --history`. This check requires GitHub noreply commit email addresses and rejects historical files outside the current release list.
 
-The installable folder is `skills/know-your-code/`. Keep its `LICENSE` identical to the root license. Generate downloadable ZIPs with `scripts/package_skill.py`.
+The installable folder is `skills/know-your-code/`. Keep its `LICENSE` identical to the root license. Generate downloadable ZIPs with `scripts/package_skill.py`. Codex copies that folder into `.agents/skills/`. Cursor copies it into `.cursor/skills/` or `~/.cursor/skills/`, and discovers the same skill from the Cursor plugin manifests in `.cursor-plugin/`.

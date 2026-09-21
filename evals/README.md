@@ -1,13 +1,13 @@
 # Test the skill
 
-Use these examples to check a skill change in Codex. Each fixture is a small Python project with a known result. Python 3.9 or newer is required.
+Use these examples to check a skill change in Codex or Cursor. Each fixture is a small Python project with a known result. Python 3.9 or newer is required.
 
 ## Set up a case
 
 1. Copy a folder from [fixtures](fixtures) into a new working directory outside this repository.
-2. Copy `skills/know-your-code` into that directory's `.agents/skills/` folder.
-3. Open the directory in Codex and start a new task.
-4. Send the case's prompt below. Keep the expected results separate from the Codex task.
+2. Copy `skills/know-your-code` into that directory's `.agents/skills/` folder for Codex, or `.cursor/skills/` for Cursor.
+3. Open the directory in Codex or Cursor and start a new task.
+4. Send the case's prompt below. In Cursor, type `/know-your-code` instead of `$know-your-code`. Keep the expected results separate from the host task.
 
 Use a fresh copy for each case. Afterward, compare the explanation with the source, inspect file changes, and run the affected code.
 
@@ -21,7 +21,7 @@ $know-your-code Walk me through what happens when I borrow two copies of the atl
 
 Expected results:
 
-- Codex reads `library.py` and follows `borrow`.
+- The assistant reads `library.py` and follows `borrow`.
 - The first call returns `True` and leaves one copy.
 - The second call returns `False` and leaves the count unchanged.
 - The explanation includes a runnable check. Source files remain unchanged.
@@ -36,7 +36,7 @@ $know-your-code The label formatter is broken: a small parcel displays $4.50 but
 
 The prompt deliberately suggests the wrong cause. Expected results:
 
-- Codex identifies the extra multiplication by 100 in `quote`.
+- The assistant identifies the extra multiplication by 100 in `quote`.
 - The fix preserves the correct `label` function.
 - Executed checks confirm quotes of 450, 900, and 900 cents for the three cases.
 - The explanation identifies the unit error and the correction.
@@ -51,7 +51,7 @@ $know-your-code Help me understand the preview function. Read the code, then ask
 
 Expected results:
 
-- Codex reads the source, asks one question, and waits for an answer.
+- The assistant reads the source, asks one question, and waits for an answer.
 - It does not disclose the dimensions before the user responds.
 - If the user answers `240 by 160`, it explains that the scale is 0.5 and the result is `60 by 40`.
 - Source files remain unchanged.
@@ -65,7 +65,7 @@ python3 evals/prepare.py ./scratch-checkout
 python3 evals/check_fixture.py ./scratch-checkout/project --expect buggy
 ```
 
-After asking Codex to fix the bug, check the result:
+After asking the assistant to fix the bug, check the result:
 
 ```sh
 python3 evals/check_fixture.py ./scratch-checkout/project --expect fixed
@@ -75,6 +75,6 @@ Preparation refuses an existing destination. These commands check the arithmetic
 
 ## Report a result
 
-Include the skill commit, Codex version, model, prompt, observed behavior, and file changes. Mark each expected result as pass, fail, or not tested. Use synthetic examples and remove private data before sharing a report.
+Include the skill commit, host and version, model, prompt, observed behavior, and file changes. Mark each expected result as pass, fail, or not tested. Use synthetic examples and remove private data before sharing a report.
 
 See [session acceptance checks](session-checks.md) for detours, feedback, scope, and voice. Repository checks are listed in [Contributing](../CONTRIBUTING.md). Automated checks cover packaging and fixtures; they do not measure teaching quality. Live voice testing is pending.

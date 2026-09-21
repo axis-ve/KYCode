@@ -37,6 +37,7 @@ class ReleaseChecks(unittest.TestCase):
             with self.subTest(value=value):
                 self.assertTrue(release.findings(value.encode()))
         self.assertFalse(release.findings(b'project/.agents/skills/know-your-code/SKILL.md'))
+        self.assertFalse(release.findings(b'project/.cursor/skills/know-your-code/SKILL.md'))
 
     def test_credentials_and_private_email_are_rejected(self):
         examples = ['ghp_' + 'a' * 36, 'sk-' + 'b' * 40, 'person' + '@' + 'mail.example']

@@ -1,0 +1,15 @@
+{
+  "name": "know-your-code",
+  "displayName": "Know Your Code",
+  "version": "1.0.0",
+  "description": "Trace features, investigate bugs, and understand your code",
+  "author": {
+    "name": "Veritas Axis"
+  },
+  "homepage": "https://github.com/axis-ve/KYCode",
+  "repository": "https://github.com/axis-ve/KYCode",
+  "license": "MIT",
+  "keywords": ["codebase", "debugging", "learning", "skills"],
+  "logo": "assets/logo.svg",
+  "skills": "skills"
+}

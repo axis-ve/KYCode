@@ -1,10 +1,19 @@
 Know Your Code
 
+Codex
 Copy the know-your-code folder into your project's .agents/skills/ directory.
 The entry point should be .agents/skills/know-your-code/SKILL.md.
 Open that project in Codex and send:
 $know-your-code Help me understand this project.
 If the skill does not appear, restart Codex.
+
+Cursor
+Copy the know-your-code folder into your project's .cursor/skills/ directory.
+The entry point should be .cursor/skills/know-your-code/SKILL.md.
+Open that project in Cursor and send:
+/know-your-code Help me understand this project.
+If the skill does not appear, reload the window.
+For every local project, copy the folder to ~/.cursor/skills/know-your-code/.
 
 Source and updates: https://github.com/axis-ve/KYCode
 License: MIT. See know-your-code/LICENSE.

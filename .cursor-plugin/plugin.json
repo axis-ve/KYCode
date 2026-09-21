@@ -2,7 +2,7 @@
   "name": "know-your-code",
   "displayName": "Know Your Code",
   "version": "1.0.0",
-  "description": "Trace features, investigate bugs, and understand your code",
+  "description": "Talk through your code with voice-first walkthroughs and debugging",
   "author": {
     "name": "Veritas Axis"
   },

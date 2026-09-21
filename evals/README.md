@@ -2,6 +2,8 @@
 
 Use these examples to check a skill change in Codex or Cursor. Each fixture is a small Python project with a known result. Python 3.9 or newer is required.
 
+Voice is the primary acceptance path. Start with the [voice walkthrough checks](session-checks.md), using these fixtures for source evidence. Run text-only cases as regression checks. Passing repository tests or reviewing a transcript does not establish a working spoken conversation.
+
 ## Set up a case
 
 1. Copy a folder from [fixtures](fixtures) into a new working directory outside this repository.

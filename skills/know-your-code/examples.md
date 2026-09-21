@@ -1,8 +1,28 @@
 # Examples
 
-Patterns for [SKILL.md](SKILL.md). Match the shape, not the domain.
+Patterns for [SKILL.md](SKILL.md). These examples are illustrative, not reports of inspected user code or completed voice tests.
 
-## Feature trace
+## Voice walkthrough and interruption
+
+Prompt: "Talk me through borrowing two copies of the atlas, then trying another two. Don't change any files."
+
+After inspecting the reading-room fixture, a suitable spoken section is: "The library starts with three copies. The borrowing function checks whether there are enough before changing the count. Your first request takes two, so one is left."
+
+User: "Wait, does that get saved if I restart?"
+
+Response: "In this example, the count lives in memory. I don't see a write to a file or database. Restarting this script recreates the original count. Back to your second request: it asks for two when only one remains, so it's rejected and that last copy stays available."
+
+Companion text identifies `library.py`, `borrow`, and `BOOKS`, with a runnable check for the return values and remaining count. Describe a check as executed only after running it.
+
+Bad: reading a file listing aloud, delivering the entire codebase as a monologue, ignoring the detour, or restarting the explanation afterward.
+
+## Text-only request
+
+Prompt: "Text only, please. Give me the path and a command to check it."
+
+Good: provide the compact written trace and runnable check without asking the user to enable voice. Voice is the primary experience, while the user's chosen medium controls this response.
+
+## Written companion for a feature trace
 
 Prompt:
 

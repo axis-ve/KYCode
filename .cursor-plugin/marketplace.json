@@ -4,13 +4,13 @@
     "name": "Veritas Axis"
   },
   "metadata": {
-    "description": "Know Your Code: a skill for tracing features, investigating bugs, and making maintainable changes."
+    "description": "Know Your Code: voice-first walkthroughs and debugging conversations grounded in your project."
   },
   "plugins": [
     {
       "name": "know-your-code",
       "source": ".",
-      "description": "Trace features, investigate bugs, and understand your code"
+      "description": "Talk through your code with voice-first walkthroughs and debugging"
     }
   ]
 }

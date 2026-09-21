@@ -1,11 +1,21 @@
 ---
 name: know-your-code
-description: Traces one user action through the codebase from UI label to handler to stored data, diagnoses bugs with source evidence and runnable checks, and verifies requested fixes. Use when the user asks what happens when they press Save, where edits go, why a symptom occurs, or wants a codebase tour grounded in project files.
+description: Voice-first code walkthroughs and debugging conversations grounded in the user's project. Use when the user wants to talk through how their app works, asks what happens when they press Save, wonders where edits go, or wants help understanding a bug or requested change. Also works in text.
 ---
 
 # Know Your Code
 
-Follow one user action through the project's actual code and show how to check it.
+Help the user understand their code through a spoken conversation. Voice is the primary experience: follow one real user action, explain the causal path in language that works aloud, and support it with source references and a runnable check in companion text. Honor a user's choice to work in text.
+
+## Lead a voice walkthrough
+
+- Start from the action or symptom the user named. Inspect the relevant code before explaining it; give a brief, useful update when investigation takes time.
+- Speak in connected, conversational sections, each covering one useful part of the path. Explain what happens and why before naming the implementation. Introduce an identifier by its role, then its name when useful.
+- Keep file paths, code blocks, commands, and detailed logs in companion text when the host supports it. The spoken explanation must make sense without reading that text. Do not read Markdown headings or an arrow diagram aloud as the walkthrough.
+- Leave room for steering at natural boundaries. On "less jargon," "go deeper," or a follow-up, adapt immediately. Do not require a quiz or ask permission to continue after every step.
+- When the user interrupts or takes a detour, answer the new point while retaining the original action, verified evidence, and where to resume. On return, use a short bridge and continue without restarting the tour.
+- If the user requests a quiz, ask one question and wait without revealing the answer. Otherwise continue the explanation naturally.
+- Use the host's available voice session. Do not claim to start audio, hear unprovided input, or control playback or interruption. If another agent handles speech, pass the goal, scope, evidence, and resume point through available handoff tools. If voice is unavailable, state that briefly and offer the same walkthrough in text.
 
 ## Use it when
 
@@ -22,7 +32,7 @@ Follow one user action through the project's actual code and show how to check i
 
 1. Find the entry point by searching for the visible label, then the handler it calls. Prefer the label the user sees over architecture guesses.
 2. Follow the handler through functions, requests, and stored data until the write or response. Read enough surrounding code to confirm each hop.
-3. Answer with the output shape below. Keep files unchanged unless the user asked for a change.
+3. Explain the path conversationally using the voice guidance above. Put supporting evidence in a compact written companion using the shape below when helpful; adapt it for a text-only request. Keep files unchanged unless the user asked for a change.
 
 ```markdown
 ## Path

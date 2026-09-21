@@ -1,7 +1,7 @@
 interface:
   display_name: "Know Your Code"
-  short_description: "Trace features, investigate bugs, and understand your code"
+  short_description: "Talk through your code with voice-first walkthroughs"
   icon_small: "./assets/logo.svg"
   icon_large: "./assets/logo.svg"
   brand_color: "#244BFF"
-  default_prompt: "Use $know-your-code to trace one user action through my project, show the relevant code, and explain how to check what happens without changing files."
+  default_prompt: "Use $know-your-code to talk me through one action in my project in voice, with code references and a runnable check in companion text, without changing files."

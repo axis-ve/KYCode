@@ -22,6 +22,8 @@ scripts/package_skill.py
 scripts/release_check.py
 skills/know-your-code/LICENSE
 skills/know-your-code/SKILL.md
+skills/know-your-code/reference.md
+skills/know-your-code/examples.md
 skills/know-your-code/agents/openai.yaml
 skills/know-your-code/assets/logo.svg
 tests/test_release.py

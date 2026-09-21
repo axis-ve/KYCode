@@ -53,7 +53,7 @@ The skill gives the assistant instructions to work from your code and check its 
 - Trace a user action through the relevant functions, requests, and stored data.
 - Investigate a bug using source code, logs, and reproducible behavior.
 - Make a requested change, verify it, and explain where to edit it next.
-- Help you test your understanding with questions about code you have just explored.
+- Answer a focused question about code just traced, only when asked.
 
 Exploration stays read-only unless you ask for changes. Say "less jargon," "go deeper," or "just fix it" to set the pace.
 

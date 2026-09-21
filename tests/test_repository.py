@@ -31,6 +31,7 @@ class PackageChecks(unittest.TestCase):
                 files = [path for path in SKILL.rglob('*') if path.is_file()]
                 self.assertEqual(set(archive.namelist()), {
                     'know-your-code/SKILL.md', 'know-your-code/LICENSE',
+                    'know-your-code/reference.md', 'know-your-code/examples.md',
                     'know-your-code/agents/openai.yaml', 'know-your-code/assets/logo.svg', 'INSTALL.txt',
                 })
                 for path in files:

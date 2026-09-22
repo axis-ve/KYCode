@@ -33,7 +33,9 @@ python3 scripts/release_check.py --export ./release-copy
 
 Inspect the resulting files and ZIP. The scanner detects configured patterns, not every possible secret or private fact. Review prose, examples, filenames, and metadata too. Keep transcripts and internal reports out of the public file list.
 
-To scan tracked files and reachable commits, run `python3 scripts/release_check.py --history`. This check requires GitHub noreply commit email addresses and rejects historical files outside the current release list.
+To scan tracked files and reachable commits, run `python3 scripts/release_check.py --history`. This check requires every commit author to use a GitHub noreply address, accepts GitHub's own merge identity as a committer so pull requests merged on GitHub pass, and rejects historical files outside the current release list. CI runs it on every push and pull request.
+
+Changes reach `main` through pull requests. Before merging one on GitHub, turn on "Keep my email addresses private" in your GitHub email settings. GitHub writes the merge commit with your account's email, so without that setting the merge carries your personal address and fails this check.
 
 Every folder under `skills/` is installable on its own. Keep each one's `LICENSE` identical to the root license, and give each one a `SKILL.md`, an `agents/openai.yaml`, and an `assets/logo.svg` so it stays branded and self-contained when copied alone. Generate downloadable ZIPs with `scripts/package_skill.py`; the archive carries every skill folder.
 

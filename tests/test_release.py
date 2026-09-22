@@ -44,6 +44,16 @@ class ReleaseChecks(unittest.TestCase):
         for value in examples:
             self.assertTrue(release.findings(value.encode()))
 
+    def test_history_accepts_github_merges_but_not_personal_authors(self):
+        noreply = '1+person' + release.NOREPLY
+        personal = 'person' + '@' + 'mail.example'
+        github = release.GITHUB_MERGE_COMMITTER
+        self.assertTrue(release.identity_allowed(noreply, noreply))
+        self.assertTrue(release.identity_allowed(noreply, github))
+        for author, committer in ((github, github), (personal, github), (noreply, personal), (personal, noreply)):
+            with self.subTest(author=author, committer=committer):
+                self.assertFalse(release.identity_allowed(author, committer))
+
     def test_archive_content_is_checked(self):
         with tempfile.TemporaryDirectory() as directory:
             archive = Path(directory) / 'skill.zip'

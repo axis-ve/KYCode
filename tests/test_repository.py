@@ -2,6 +2,7 @@ import importlib.util
 import json
 from pathlib import Path
 import re
+import shutil
 import tempfile
 import unittest
 from zipfile import ZipFile
@@ -175,6 +176,26 @@ class PackageChecks(unittest.TestCase):
 
 
 class FixtureChecks(unittest.TestCase):
+    def test_notes_fixture_rejects_the_fix_that_breaks_shared_callers(self):
+        check = load_script('check_notes').check
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = ROOT / 'evals/fixtures/notes-app'
+            naive, scoped = Path(directory) / 'naive', Path(directory) / 'scoped'
+            shutil.copytree(fixture, naive)
+            shutil.copytree(fixture, scoped)
+            check(fixture, 'buggy')
+            with self.assertRaises(ValueError):
+                check(fixture, 'fixed')
+            # Dropping the lowercasing in the shared helper fixes Save but breaks search and export.
+            (naive / 'text.py').write_text((naive / 'text.py').read_text().replace('.lower()', ''))
+            with self.assertRaisesRegex(ValueError, 'case-insensitive'):
+                check(naive, 'fixed')
+            # Keeping capitals only where Save stores the title fixes it without touching the other callers.
+            notes = scoped / 'notes.py'
+            notes.write_text(notes.read_text().replace('text.clean_title(title)', '" ".join(title.split())'))
+            check(scoped, 'fixed')
+            self.assertFalse(list(fixture.rglob('__pycache__')), 'Checks must not write into the fixture')
+
     def test_fresh_fixture_rejects_fixed_claim_and_accepts_real_fix(self):
         prepare = load_script('prepare').prepare
         check = load_script('check_fixture').check

@@ -16,6 +16,22 @@ Companion text identifies `library.py`, `borrow`, and `BOOKS`, with a runnable c
 
 Bad: reading a file listing aloud, delivering the entire codebase as a monologue, ignoring the detour, or restarting the explanation afterward.
 
+## Signpost and bookmark
+
+Opening a spoken walkthrough: "Three steps: the button, the check on how many copies are left, and the count it changes. Starting with the button."
+
+On a detour: "We're at step two of three, the check on copies left. Your question first: ..." The return bridge then picks up at step two.
+
+Bad: launching into the first function with no sense of how long the path is, or answering a detour and then restarting from the button.
+
+## Reach check before a shared fix
+
+Prompt: "When I press Save, a note titled My Plans comes back as my plans. Fix it so titles keep their capitals."
+
+Good, in the notes-app fixture: follows Save to `clean_title`, then searches for its other callers before editing and finds `search.py` and `export.py`. It changes only how Save stores the title, so search stays case-insensitive and exports keep the `my-plans.md` filename. Spoken: "Two other features use the same cleanup, search and export, so I changed only what Save stores."
+
+Bad: removes the lowercasing from `clean_title`. Save looks fixed, but searching for "plans" stops finding the note and exported files change name.
+
 ## Text-only request
 
 Prompt: "Text only, please. Give me the path and a command to check it."

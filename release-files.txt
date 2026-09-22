@@ -17,8 +17,16 @@ commands/orient.md
 commands/why-broken.md
 evals/README.md
 evals/check_fixture.py
+evals/check_notes.py
 evals/fixtures/checkout/cart.py
 evals/fixtures/drawing-room/canvas.py
+evals/fixtures/notes-app/app.py
+evals/fixtures/notes-app/export.py
+evals/fixtures/notes-app/handlers.py
+evals/fixtures/notes-app/notes.py
+evals/fixtures/notes-app/search.py
+evals/fixtures/notes-app/store.py
+evals/fixtures/notes-app/text.py
 evals/fixtures/parcel-room/shipping.py
 evals/fixtures/reading-room/library.py
 evals/prepare.py

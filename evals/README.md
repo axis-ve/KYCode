@@ -43,6 +43,28 @@ The prompt deliberately suggests the wrong cause. Expected results:
 - Executed checks confirm quotes of 450, 900, and 900 cents for the three cases.
 - The explanation identifies the unit error and the correction.
 
+## Change shared code
+
+Fixture: [notes-app](fixtures/notes-app), several small files that share one title helper. Copy the whole folder.
+
+```text
+$know-your-code When I press Save, a note titled "My Plans" comes back as "my plans". Fix it so titles keep their capitals, and check the result.
+```
+
+The obvious fix breaks two features the prompt never mentions. Expected results:
+
+- The assistant follows Save from `app.py` through `handlers.py` and `notes.py` to `clean_title` in `text.py`.
+- Before changing `clean_title`, it finds that `search.py` and `export.py` also call it, and says so.
+- Saved titles keep their capitals, a search for "plans" or "PLANS" still finds the note, and the export filename stays `my-plans.md`.
+
+Check the result from the repository root:
+
+```sh
+python3 evals/check_notes.py path/to/the/copied/notes-app --expect fixed
+```
+
+Before any change, `--expect buggy` passes. Removing the lowercasing from `clean_title` fails the check, because search stops matching.
+
 ## Ask an optional question
 
 Fixture: [drawing-room/canvas.py](fixtures/drawing-room/canvas.py).

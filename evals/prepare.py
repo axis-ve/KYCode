@@ -30,6 +30,8 @@ def prepare(destination):
         'prepared_at': datetime.now(timezone.utc).isoformat(),
         'status': 'not run',
         'skill_sha256': hashlib.sha256((skill / 'SKILL.md').read_bytes()).hexdigest(),
+        'skills_sha256': {path.parent.name: hashlib.sha256(path.read_bytes()).hexdigest()
+                          for path in sorted(skills.glob('*/SKILL.md'))},
         'fixture_sha256': hashlib.sha256(fixture.read_bytes()).hexdigest(),
         'model': None,
         'host_and_version': None,

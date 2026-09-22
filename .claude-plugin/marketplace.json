@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "know-your-code",
-  "description": "Know Your Code: walkthroughs, debugging, orientation, and handoffs grounded in your own project.",
+  "description": "Know Your Code: voice-first walkthroughs, debugging, orientation, and handoffs grounded in your project.",
   "owner": {
     "name": "Veritas Axis"
   },
@@ -9,7 +9,7 @@
     {
       "name": "know-your-code",
       "source": ".",
-      "description": "Talk through your code with grounded walkthroughs, debugging, orientation, and handoffs",
+      "description": "Talk through your code with voice-first walkthroughs, debugging, orientation, and handoffs",
       "category": "learning",
       "homepage": "https://github.com/axis-ve/KYCode"
     }

@@ -15,6 +15,8 @@ RELEASE = (ROOT / 'release-files.txt').read_text().splitlines()
 PUBLIC_SKILL_FILES = [name for name in RELEASE if name.startswith('skills/')]
 SKILL_NAMES = sorted({Path(name).parts[1] for name in PUBLIC_SKILL_FILES})
 HOST_SKILL_DIRS = ('.agents/skills', '.cursor/skills', '.claude/skills')
+AGENT_TOOLS = {'Read', 'Glob', 'Grep', 'Bash'}
+NO_EDIT_CLAIM = r"(?i)\b(cannot|can't|can not|unable to|is not able to)\s+(edit|write|change|modify|create)\b|\bread-only\b"
 
 
 def load_script(name):
@@ -107,6 +109,17 @@ class PackageChecks(unittest.TestCase):
         for name in SKILL_NAMES:
             self.assertTrue((ROOT / 'skills' / name / 'SKILL.md').is_file())
 
+    def test_host_manifests_agree_on_version_and_description(self):
+        plugins = [json.loads((ROOT / f'{host}/plugin.json').read_text()) for host in ('.claude-plugin', '.cursor-plugin')]
+        claude_market = json.loads((ROOT / '.claude-plugin/marketplace.json').read_text())
+        cursor_market = json.loads((ROOT / '.cursor-plugin/marketplace.json').read_text())
+        self.assertEqual(plugins[0]['version'], plugins[1]['version'])
+        self.assertRegex(plugins[0]['version'], r'^\d+\.\d+\.\d+$')
+        descriptions = {plugin['description'] for plugin in plugins}
+        descriptions |= {claude_market['plugins'][0]['description'], cursor_market['plugins'][0]['description']}
+        self.assertEqual(len(descriptions), 1)
+        self.assertEqual(claude_market['description'], cursor_market['metadata']['description'])
+
     def test_claude_commands_and_agents_are_well_formed(self):
         commands = sorted((ROOT / 'commands').glob('*.md'))
         agents = sorted((ROOT / 'agents').glob('*.md'))
@@ -130,11 +143,10 @@ class PackageChecks(unittest.TestCase):
                 metadata = frontmatter(path)
                 self.assertEqual(metadata['name'], path.stem)
                 self.assertIsInstance(metadata['description'], str)
-                tools = [tool.strip() for tool in metadata['tools'].split(',')]
-                self.assertNotIn('Edit', tools, 'Tracing and checking agents must not edit the project')
-                self.assertNotIn('Write', tools, 'Tracing and checking agents must not write files')
+                tools = {tool.strip() for tool in metadata['tools'].split(',')}
+                self.assertLessEqual(tools, AGENT_TOOLS, 'Agents get read, search, and shell tools only')
                 if 'Bash' in tools:
-                    self.assertNotRegex(metadata['description'], r'(?i)\bcannot (edit|write|change)\b',
+                    self.assertNotRegex(path.read_text(), NO_EDIT_CLAIM,
                                         'A shell can write files, so that limit is an instruction, not a tool restriction')
 
     def test_documentation_names_every_host_and_entry_point(self):
@@ -175,6 +187,8 @@ class FixtureChecks(unittest.TestCase):
                 for name in SKILL_NAMES:
                     self.assertTrue((project / host / name / 'SKILL.md').is_file())
             self.assertEqual(len((project / 'noisy.log').read_text().splitlines()), 82)
+            manifest = json.loads((destination / 'run.json').read_text())
+            self.assertEqual(sorted(manifest['skills_sha256']), SKILL_NAMES)
             check(project, 'buggy')
             with self.assertRaises(ValueError):
                 check(project, 'fixed')

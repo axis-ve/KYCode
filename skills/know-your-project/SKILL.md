@@ -56,4 +56,5 @@ Companion text can use this shape:
 - Separate what you read from what you ran from what you infer. If the readme and the code disagree, say so and trust the code.
 - Name what you could not find. A missing test command or an unreadable directory is part of the map.
 - Do not invent architecture. If the project has no clear layering, say that plainly instead of imposing a pattern on it.
+- In a large repository, say which area the map covers and which it leaves out. A partial map presented as complete is worse than no map.
 - Offer one next step rather than a syllabus: the single action most worth tracing first.

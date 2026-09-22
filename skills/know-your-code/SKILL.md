@@ -10,10 +10,11 @@ Help the user understand their code through a spoken conversation. Voice is the 
 ## Lead a voice walkthrough
 
 - Start from the action or symptom the user named. Inspect the relevant code before explaining it; give a brief, useful update when investigation takes time.
+- Signpost before going in: say how many parts the path has and where it starts, such as "three steps, starting at the Save button." Keep any spoken list to three items, and end a section on the one thing the user should remember or decide.
 - Speak in connected, conversational sections, each covering one useful part of the path. Explain what happens and why before naming the implementation. Introduce an identifier by its role, then its name when useful.
 - Keep file paths, code blocks, commands, and detailed logs in companion text when the host supports it. The spoken explanation must make sense without reading that text. Do not read Markdown headings or an arrow diagram aloud as the walkthrough.
 - Leave room for steering at natural boundaries. On "less jargon," "go deeper," or a follow-up, adapt immediately. Do not require a quiz or ask permission to continue after every step.
-- When the user interrupts or takes a detour, answer the new point while retaining the original action, verified evidence, and where to resume. On return, use a short bridge and continue without restarting the tour.
+- When the user interrupts or takes a detour, first name where you are, such as "we're at step two of three, the save handler," then answer the new point while retaining the original action, verified evidence, and where to resume. On return, use a short bridge and continue without restarting the tour.
 - If the user requests a quiz, ask one question and wait without revealing the answer. Otherwise continue the explanation naturally.
 - Use the host's available voice session. Do not claim to start audio, hear unprovided input, or control playback or interruption. If another agent handles speech, pass the goal, scope, evidence, and resume point through available handoff tools. If voice is unavailable, state that briefly and offer the same walkthrough in text.
 
@@ -32,9 +33,11 @@ Help the user understand their code through a spoken conversation. Voice is the 
 
 ## Trace one action
 
-1. Find the entry point by searching for the visible label, then the handler it calls. Prefer the label the user sees over architecture guesses.
-2. Follow the handler through functions, requests, and stored data until the write or response. Read enough surrounding code to confirm each hop.
-3. Explain the path conversationally using the voice guidance above. Put supporting evidence in a compact written companion using the shape below when helpful; adapt it for a text-only request. Keep files unchanged unless the user asked for a change.
+1. Gauge the size of the project with its own tools, such as a count of tracked source files, and match the approach to it as [reference.md](reference.md#match-the-size-of-the-project) describes: trace directly when small, check reach when medium, and name what you will and won't search when large.
+2. Find the entry point by searching for the visible label, then the handler it calls. Prefer the label the user sees over architecture guesses.
+3. Follow the handler through functions, requests, and stored data until the write or response. Read enough surrounding code to confirm each hop.
+4. When the user asks for a change, or the path runs through shared code, check reach before explaining the change or calling a fix safe: find the other callers of the code on the path and the other readers of the data it writes. Name them, or say none were found and how you searched.
+5. Explain the path conversationally using the voice guidance above. Put supporting evidence in a compact written companion using the shape below when helpful; adapt it for a text-only request. Keep files unchanged unless the user asked for a change.
 
 ```markdown
 ## Path
@@ -45,6 +48,9 @@ Help the user understand their code through a spoken conversation. Voice is the 
 
 ## Files
 - `relative/path.py`: [role in this trace]
+
+## Also reached by
+[other callers or readers of the code on this path when a change is involved, or "none found" and how you searched]
 
 ## Check
 [one runnable command or step that proves the path]

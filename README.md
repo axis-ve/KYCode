@@ -16,6 +16,8 @@ Send this in Codex:
 $skill-installer Install https://github.com/axis-ve/KYCode/tree/main/skills/know-your-code
 ```
 
+That installs the main skill. To add a companion skill, run the same command with its folder name in place of `know-your-code`, for example `skills/know-your-project`. The [skill list](#the-skills) names all eight.
+
 Open your project in Codex, then send:
 
 ```text
@@ -33,18 +35,18 @@ For a local install, first clone this repository into a new directory:
 git clone https://github.com/axis-ve/KYCode.git
 ```
 
-From the directory containing that clone, copy the skill into your existing project. Replace `path/to/your-project` with its location:
+From the directory containing that clone, copy the skills into your existing project. Replace `path/to/your-project` with its location:
 
 ```sh
 mkdir -p "path/to/your-project/.cursor/skills"
-cp -R KYCode/skills/know-your-code "path/to/your-project/.cursor/skills/"
+cp -R KYCode/skills/* "path/to/your-project/.cursor/skills/"
 ```
 
 For every local project, use this destination instead:
 
 ```sh
 mkdir -p ~/.cursor/skills
-cp -R KYCode/skills/know-your-code ~/.cursor/skills/
+cp -R KYCode/skills/* ~/.cursor/skills/
 ```
 
 Alternatively, import the repository as a plugin in Cursor: open Customize, choose From GitHub Repository, enter the URL below, then install Know Your Code from the imported marketplace:
@@ -88,17 +90,15 @@ What happens when I press Save?
 Follow it from the button to storage. Don't change any files.
 ```
 
-Claude reads the request and loads the skill that matches it. To choose one yourself, type `/know-your-code`.
+Claude reads the request and loads the skill that matches it. To choose one yourself, type its name. Claude Code prefixes plugin skills and commands with the plugin name, so with the plugin the main skill is `/know-your-code:know-your-code`. With a local copy it is `/know-your-code`.
 
-The plugin also installs three commands that do work a skill cannot do on its own:
+The plugin also installs three commands, which run only when you type them:
 
-- `/orient` maps an unfamiliar repository, and on a large one traces several entry points in parallel.
-- `/why-broken` reproduces a symptom before naming a cause.
-- `/explain-change` fetches a real diff before explaining it.
+- `/know-your-code:orient` maps an unfamiliar repository, and on a large one traces several entry points in parallel.
+- `/know-your-code:why-broken` reproduces a symptom before naming a cause.
+- `/know-your-code:explain-change` fetches a real diff before explaining it.
 
-Claude Code lists plugin commands under the plugin name, so they may appear as `/know-your-code:orient` and so on.
-
-The two subagents differ in how their limits hold. `code-path-tracer` has only read and search tools, so it cannot edit, create, or run anything. `check-runner` runs your project's own commands. It has no file-editing tools and its instructions forbid changing files through the shell, but its shell access means that limit rests on those instructions.
+The commands use two subagents, which differ in how their limits hold. `code-path-tracer` has only read and search tools, so it cannot edit, create, or run anything. `check-runner` runs your project's own commands. It has no file-editing tools and its instructions forbid changing files through the shell, but its shell access means that limit rests on those instructions.
 
 ### Start a voice walkthrough in Cursor
 
@@ -137,7 +137,7 @@ The last three exist because most bad answers about a codebase are not reasoning
 
 ## Try it on your project
 
-In Codex, prefix prompts with `$know-your-code`. In Cursor, type `/know-your-code`. In Claude Code, ask in your own words, or type `/know-your-code` to pick the skill yourself.
+In Codex, prefix prompts with `$know-your-code`. In Cursor, type `/know-your-code`. In Claude Code, ask in your own words, or pick the skill yourself with `/know-your-code:know-your-code` from the plugin or `/know-your-code` from a local copy.
 
 Investigate a symptom:
 

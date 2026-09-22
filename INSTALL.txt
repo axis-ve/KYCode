@@ -43,8 +43,11 @@ Help me understand this project.
 Claude picks the matching skill from what you asked; you can also name one
 directly with /know-your-code.
 If the skill does not appear, run /doctor, then restart Claude Code.
-Installing from the repository as a plugin adds slash commands (/orient,
-/why-broken, /explain-change) and two subagents as well:
+Installing from the repository as a plugin adds three slash commands and
+two subagents as well. Plugin names carry the plugin prefix, so the commands
+are /know-your-code:orient, /know-your-code:why-broken, and
+/know-your-code:explain-change, and the main skill is
+/know-your-code:know-your-code.
 /plugin marketplace add axis-ve/KYCode
 /plugin install know-your-code@know-your-code
 

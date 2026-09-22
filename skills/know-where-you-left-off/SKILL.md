@@ -5,7 +5,7 @@ description: Capture or resume the state of a piece of work so it survives a new
 
 # Know Where You Left Off
 
-Work with an assistant is lost between sessions in a specific way: the conclusions survive in the user's head, and the evidence does not. Capture the evidence, the scope, and the one next step, so resuming does not mean re-deriving.
+Work with an assistant is lost between sessions in a specific way: the conclusions survive in the user's head, and the evidence does not. Capture the evidence, the scope, and the one next step, so resuming does not mean re-deriving. Voice is the primary experience: say the goal, the next step, and the open question aloud, and keep the full note in companion text.
 
 ## Use it when
 

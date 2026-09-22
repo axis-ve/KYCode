@@ -1,6 +1,6 @@
 ---
 name: know-what-you-know
-description: Run a short practice session on code the user has already explored, asking one question at a time, waiting for the answer, and correcting precisely. Use when the user asks to be quizzed or tested, wants to check their understanding, asks whether they got something right, or wants to practice predicting what code does. Do not use to explain code the user did not ask to be tested on.
+description: Run a short practice session on code the user has already explored, asking one question at a time, waiting for the answer, and correcting precisely. Use when the user asks to be quizzed or tested, wants to check their understanding, asks whether they got something right, or wants to practice predicting what code does. Do not use to explain code the user did not ask to be tested on. Also works in text.
 ---
 
 # Know What You Know

@@ -1,6 +1,6 @@
 ---
 name: know-your-change
-description: Explain what a diff, commit, branch, or pull request actually changes, read against the code around it. Use when the user asks what a change does, wants a review they can follow, asks what to test before merging, is catching up on someone else's work, or wonders why a recent change broke something. Also works in text.
+description: Explain what a diff, commit, branch, or pull request actually changes, read against the code around it. Use when the user asks what a change does, wants a review they can follow, asks what to test before merging, is catching up on someone else's work, or suspects that a specific commit, branch, or pull request broke something. Also works in text.
 ---
 
 # Know Your Change

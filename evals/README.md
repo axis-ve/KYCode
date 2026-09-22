@@ -9,7 +9,7 @@ Voice is the primary acceptance path. Start with the [voice walkthrough checks](
 1. Copy a folder from [fixtures](fixtures) into a new working directory outside this repository.
 2. Copy the folders in `skills/` into that directory's `.agents/skills/` for Codex, `.cursor/skills/` for Cursor, or `.claude/skills/` for Claude Code.
 3. Open the directory in the host and start a new task.
-4. Send the case's prompt below. In Cursor, type `/know-your-code` instead of `$know-your-code`. In Claude Code, drop the prefix and send the request on its own, so the case also checks that the right skill loads from the wording alone. Keep the expected results separate from the host task.
+4. Send the case's prompt below. In Cursor, type `/know-your-code` instead of `$know-your-code`. In Claude Code, drop the prefix and send the request on its own, so the case also checks that the right skill loads from the wording alone. In the optional-question case, `know-your-code` and `know-what-you-know` are both correct, since both ask one question and wait; record which one loaded. Keep the expected results separate from the host task.
 
 Use a fresh copy for each case. Afterward, compare the explanation with the source, inspect file changes, and run the affected code.
 

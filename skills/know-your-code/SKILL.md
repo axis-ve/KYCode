@@ -1,6 +1,6 @@
 ---
 name: know-your-code
-description: Voice-first code walkthroughs and debugging conversations grounded in the user's project. Use when the user wants to talk through how their app works, asks what happens when they press Save, wonders where edits go, or wants help understanding a bug or requested change. Also works in text.
+description: Voice-first code walkthroughs and debugging conversations grounded in the user's project. Use when the user wants to talk through how their app works, asks what happens when they press Save, wonders where edits go, reports a bug or symptom without pointing at a specific commit or pull request, or wants to understand a change they are asking for. Also works in text.
 ---
 
 # Know Your Code
@@ -27,6 +27,8 @@ Help the user understand their code through a spoken conversation. Voice is the 
 
 - The request is a routine implementation with no question about how the code works. Just do the task.
 - The project files are unavailable. Ask for access or the relevant code instead of inventing a codebase.
+- The user wants a map of a whole unfamiliar project rather than one action. Use `know-your-project` when it is installed.
+- The user asks what a specific commit, branch, diff, or pull request does or broke. Use `know-your-change` when it is installed.
 
 ## Trace one action
 

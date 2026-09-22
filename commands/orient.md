@@ -21,4 +21,4 @@ $ARGUMENTS
 
 If the repository is large, dispatch several `code-path-tracer` subagents in parallel, one per candidate entry point, and assemble their reports into one map. Each is read-only, so the search cannot change anything, and the raw file dumps stay out of this conversation.
 
-Deliver the map in the shape the skill describes, then offer one next step: the single action most worth tracing in depth with `/know-your-code`.
+Deliver the map in the shape the skill describes, then offer one next step: the single action most worth tracing in depth with the `know-your-code` skill.

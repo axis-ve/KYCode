@@ -1,11 +1,11 @@
 ---
 name: know-your-words
-description: Map the words the user uses for their app to the identifiers the code actually uses, so both sides stop talking past each other. Use when a request touched the wrong code, when the user and the assistant seem to mean different things by the same word, when the names in the codebase do not match what the user calls things, or when the user asks what something is called here. Also works in text.
+description: Map the words the user uses for their app to the identifiers the code actually uses, so both sides stop talking past each other. Use when a request changed the wrong file, screen, or component because a word meant something different in the code, when the user and the assistant seem to mean different things by the same word, when the names in the codebase do not match what the user calls things, or when the user asks what something is called here. Not for a request whose intended behavior was unclear. Also works in text.
 ---
 
 # Know Your Words
 
-Most wrong answers about a codebase are not reasoning failures. They are naming failures: the user says "the login page" and the code says `AuthShell`, so the right reasoning lands on the wrong file. This skill builds the translation table between the two vocabularies and then uses it.
+Most wrong answers about a codebase are not reasoning failures. They are naming failures: the user says "the login page" and the code says `AuthShell`, so the right reasoning lands on the wrong file. This skill builds the translation table between the two vocabularies and then uses it. Voice is the primary experience: say the translation aloud in the user's words, and keep the table and paths in companion text.
 
 ## Use it when
 
@@ -18,6 +18,7 @@ Most wrong answers about a codebase are not reasoning failures. They are naming 
 
 - The word is unambiguous and already matched. Do not stage a vocabulary exercise to answer a simple question.
 - The user wants behavior explained. Use `know-your-code`.
+- The request was ambiguous about what should happen, not about which thing was meant. Use `know-what-you-want`.
 
 ## Build the table
 

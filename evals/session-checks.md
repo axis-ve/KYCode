@@ -4,7 +4,7 @@ Use these manual cases when reviewing changes to the skill. Record the skill rev
 
 ## Primary acceptance: a voice walkthrough
 
-Status: live voice acceptance is pending for Codex and Cursor. Packaging checks and simulated conversations do not pass this acceptance test. Claude Code is a terminal host with no voice session of its own, so this case does not apply to it; use the Claude Code checks below instead.
+Status: live voice acceptance is pending for Codex, Cursor, and Claude Code. Packaging checks and simulated conversations do not pass this acceptance test.
 
 Use the reading-room fixture from the evaluation guide. Invoke the skill, start the host's voice session, and ask aloud: "Talk me through borrowing two copies of the atlas, then trying another two. Don't change any files."
 
@@ -41,10 +41,10 @@ Status: live Claude Code installation and behavior checks not yet run.
 
 1. Record the Claude Code version, operating system, and model. Do not record credentials. Install both ways and record which route the rest of the session used: the plugin route (`/plugin marketplace add`, then `/plugin install`) and the local copy into `.claude/skills/`. After a local copy, confirm the skills appear; run `/doctor` and restart if they do not.
 2. Open a fixture project and send the case prompt with no prefix and no slash command: "What happens when I borrow two copies of the atlas and then try another two? Don't change any files." Verify that `know-your-code` loads from the wording alone, and record which skill actually loaded. A skill that has to be named by hand has failed this check.
-3. Run the commands against the same fixture and verify each does the work its description claims: `/orient` produces a map rather than a file listing, `/why-broken` reproduces before naming a cause, `/explain-change` fetches a real diff before describing it.
+3. Run the commands against the same fixture and verify each does the work its description claims: `/know-your-code:orient` produces a map rather than a file listing, `/know-your-code:why-broken` reproduces before naming a cause, `/know-your-code:explain-change` fetches a real diff before describing it. Record whether the unprefixed forms such as `/orient` also resolve in this version. Confirm that none of the three runs unless typed.
 4. Verify the subagents carry their limits. Dispatch `code-path-tracer` and confirm it returns a path with file and line evidence and claims no executed check. Dispatch `check-runner` on a failing fixture and confirm it reports the failure without editing anything. Inspect the working tree afterward; both agents must leave it unchanged.
 5. Verify scope. Ask a question without authorizing edits and confirm files are unchanged. Ask for a bounded fix and confirm only the affected behavior changes.
-6. Record spoken input and output as unavailable unless the installed version provides them. Claude Code is a terminal host; explanations should still read aloud well, but do not record dictation or text-to-speech from another tool as host voice support.
+6. Claude Code includes a voice mode for dictating input, which requires a Claude.ai login. Invoke the skill, dictate the reading-room prompt, and record speech input, spoken output, and interruption separately as pass, fail, or unavailable in this version, as in the Cursor checks. Successful dictation does not establish spoken output.
 
 ## Skill selection
 

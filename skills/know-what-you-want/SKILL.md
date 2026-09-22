@@ -1,16 +1,16 @@
 ---
 name: know-what-you-want
-description: Turn a rough idea into a request that can be built correctly the first time, by surfacing the decisions hidden inside it and settling most of them against the existing code. Use when the user describes something they want but cannot yet specify, when a previous attempt produced the wrong thing, when the user asks for help writing a prompt, spec, or ticket, or when they ask what they are not telling you. Do not use for routine tasks that are already clear.
+description: Turn a rough idea into a request that can be built correctly the first time, by surfacing the decisions hidden inside it and settling most of them against the existing code. Use when the user describes something they want but cannot yet specify, when a previous attempt built the wrong behavior because the request was open to more than one reading, when the user asks for help writing a prompt, spec, or ticket, or when they ask what they are not telling you. Do not use for routine tasks that are already clear, or when the right behavior landed on the wrong file or component, which is a naming problem. Also works in text.
 ---
 
 # Know What You Want
 
-A vague request is not a failure of the person asking. It is a request with decisions still inside it. Find those decisions, answer the ones the code already answers, and put the rest in front of the user in a form they can settle in a sentence.
+A vague request is not a failure of the person asking. It is a request with decisions still inside it. Find those decisions, answer the ones the code already answers, and put the rest in front of the user in a form they can settle in a sentence. Voice is the primary experience: ask the open questions aloud, one at a time, and keep the settled decisions and the acceptance check in companion text.
 
 ## Use it when
 
 - The user describes an outcome but not a behavior: "make the dashboard better," "add sharing," "handle errors properly."
-- A previous attempt built the wrong thing and the user is about to try again.
+- A previous attempt built the wrong behavior and the user is about to try again.
 - The user asks how to phrase a request, a ticket, or a prompt.
 - The work is large enough that a wrong reading costs real time.
 
@@ -19,6 +19,7 @@ A vague request is not a failure of the person asking. It is a request with deci
 - The request is already clear enough to act on. Build it. Clarification is not a ritual.
 - One reasonable default covers every reading. State the assumption in one line and proceed.
 - The user has said to stop asking and start building. That is their call; proceed under stated assumptions.
+- The right behavior landed in the wrong place because a word meant something else in the code. Use `know-your-words`.
 
 ## Find the decisions
 

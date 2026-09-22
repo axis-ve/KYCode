@@ -1,0 +1,12 @@
+{
+  "name": "know-your-code",
+  "version": "1.0.0",
+  "description": "Talk through your code with grounded walkthroughs, debugging, orientation, and handoffs",
+  "author": {
+    "name": "Veritas Axis"
+  },
+  "homepage": "https://github.com/axis-ve/KYCode",
+  "repository": "https://github.com/axis-ve/KYCode",
+  "license": "MIT",
+  "keywords": ["codebase", "debugging", "learning", "onboarding", "skills"]
+}

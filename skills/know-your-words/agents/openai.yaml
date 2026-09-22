@@ -1,0 +1,7 @@
+interface:
+  display_name: "Know Your Words"
+  short_description: "Match your words to what the code calls them"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  brand_color: "#244BFF"
+  default_prompt: "Use $know-your-words to map the words I use for my app to the identifiers in the code, and flag anywhere one of my words means two different things."

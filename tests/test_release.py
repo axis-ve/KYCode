@@ -49,7 +49,7 @@ class ReleaseChecks(unittest.TestCase):
             archive = Path(directory) / 'skill.zip'
             with ZipFile(archive, 'w') as output:
                 for name in release.public_files(ROOT):
-                    if name.startswith('skills/know-your-code/'):
+                    if name.startswith('skills/'):
                         output.writestr(Path(name).relative_to('skills').as_posix(), (ROOT / name).read_bytes())
                 output.writestr('INSTALL.txt', '/' + 'Users/person/work')
             with self.assertRaises(ValueError):

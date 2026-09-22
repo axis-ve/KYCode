@@ -1,15 +1,15 @@
 # Test the skill
 
-Use these examples to check a skill change in Codex or Cursor. Each fixture is a small Python project with a known result. Python 3.9 or newer is required.
+Use these examples to check a skill change in Codex, Cursor, or Claude Code. Each fixture is a small Python project with a known result. Python 3.9 or newer is required.
 
 Voice is the primary acceptance path. Start with the [voice walkthrough checks](session-checks.md), using these fixtures for source evidence. Run text-only cases as regression checks. Passing repository tests or reviewing a transcript does not establish a working spoken conversation.
 
 ## Set up a case
 
 1. Copy a folder from [fixtures](fixtures) into a new working directory outside this repository.
-2. Copy `skills/know-your-code` into that directory's `.agents/skills/` folder for Codex, or `.cursor/skills/` for Cursor.
-3. Open the directory in Codex or Cursor and start a new task.
-4. Send the case's prompt below. In Cursor, type `/know-your-code` instead of `$know-your-code`. Keep the expected results separate from the host task.
+2. Copy the folders in `skills/` into that directory's `.agents/skills/` for Codex, `.cursor/skills/` for Cursor, or `.claude/skills/` for Claude Code.
+3. Open the directory in the host and start a new task.
+4. Send the case's prompt below. In Cursor, type `/know-your-code` instead of `$know-your-code`. In Claude Code, drop the prefix and send the request on its own, so the case also checks that the right skill loads from the wording alone. Keep the expected results separate from the host task.
 
 Use a fresh copy for each case. Afterward, compare the explanation with the source, inspect file changes, and run the affected code.
 
@@ -79,4 +79,4 @@ Preparation refuses an existing destination. These commands check the arithmetic
 
 Include the skill commit, host and version, model, prompt, observed behavior, and file changes. Mark each expected result as pass, fail, or not tested. Use synthetic examples and remove private data before sharing a report.
 
-See [session acceptance checks](session-checks.md) for detours, feedback, scope, and voice. Repository checks are listed in [Contributing](../CONTRIBUTING.md). Automated checks cover packaging and fixtures; they do not measure teaching quality. Live voice testing is pending.
+See [session acceptance checks](session-checks.md) for detours, feedback, scope, and voice. Repository checks are listed in [Contributing](../CONTRIBUTING.md). Automated checks cover packaging, manifests, and fixtures; they do not measure teaching quality. Live voice testing is pending.

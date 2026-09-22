@@ -1,0 +1,7 @@
+interface:
+  display_name: "Know Your Project"
+  short_description: "Map an unfamiliar codebase before you dive in"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  brand_color: "#244BFF"
+  default_prompt: "Use $know-your-project to map this repository in voice: what it does, the ways in, where state lives, and what I should read first, without changing files."

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Know What You Know"
+  short_description: "Check your understanding with one question at a time"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  brand_color: "#244BFF"
+  default_prompt: "Use $know-what-you-know to quiz me on the code we just read, one question at a time, waiting for my answer before explaining anything."

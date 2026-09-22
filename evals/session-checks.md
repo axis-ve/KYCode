@@ -4,7 +4,7 @@ Use these manual cases when reviewing changes to the skill. Record the skill rev
 
 ## Primary acceptance: a voice walkthrough
 
-Status: live voice acceptance is pending for Codex and Cursor. Packaging checks and simulated conversations do not pass this acceptance test.
+Status: live voice acceptance is pending for Codex and Cursor. Packaging checks and simulated conversations do not pass this acceptance test. Claude Code is a terminal host with no voice session of its own, so this case does not apply to it; use the Claude Code checks below instead.
 
 Use the reading-room fixture from the evaluation guide. Invoke the skill, start the host's voice session, and ask aloud: "Talk me through borrowing two copies of the atlas, then trying another two. Don't change any files."
 
@@ -34,3 +34,31 @@ Status: live Cursor installation and voice checks not yet run.
 3. Select `/know-your-code` in Agent chat, then dictate: "What happens when I press Save? Keep it short, show me how to check it, and don't change any files." Choose an action that exists in the project. Check the transcription before sending.
 4. Verify that the response follows actual source files, offers a runnable check, and leaves project files unchanged. Dictate "Explain that function with less jargon," then return to the original trace and check continuity.
 5. Record speech input, spoken output, and interruption behavior separately as pass, fail, or unavailable in this Cursor version. Successful dictation does not establish spoken output or interruption support. Keep live voice results separate from repository test results.
+
+## Claude Code
+
+Status: live Claude Code installation and behavior checks not yet run.
+
+1. Record the Claude Code version, operating system, and model. Do not record credentials. Install both ways and record which route the rest of the session used: the plugin route (`/plugin marketplace add`, then `/plugin install`) and the local copy into `.claude/skills/`. After a local copy, confirm the skills appear; run `/doctor` and restart if they do not.
+2. Open a fixture project and send the case prompt with no prefix and no slash command: "What happens when I borrow two copies of the atlas and then try another two? Don't change any files." Verify that `know-your-code` loads from the wording alone, and record which skill actually loaded. A skill that has to be named by hand has failed this check.
+3. Run the commands against the same fixture and verify each does the work its description claims: `/orient` produces a map rather than a file listing, `/why-broken` reproduces before naming a cause, `/explain-change` fetches a real diff before describing it.
+4. Verify the subagents carry their limits. Dispatch `code-path-tracer` and confirm it returns a path with file and line evidence and claims no executed check. Dispatch `check-runner` on a failing fixture and confirm it reports the failure without editing anything. Inspect the working tree afterward; both agents must leave it unchanged.
+5. Verify scope. Ask a question without authorizing edits and confirm files are unchanged. Ask for a bounded fix and confirm only the affected behavior changes.
+6. Record spoken input and output as unavailable unless the installed version provides them. Claude Code is a terminal host; explanations should still read aloud well, but do not record dictation or text-to-speech from another tool as host voice support.
+
+## Skill selection
+
+Run these once per host after adding or editing any skill description. Each prompt must load the named skill and no other. Record what actually fired.
+
+| Prompt | Expected skill |
+| --- | --- |
+| "What happens when I press Save?" | `know-your-code` |
+| "I just cloned this. Where do I start?" | `know-your-project` |
+| "What does this pull request actually change?" | `know-your-change` |
+| "Where should I put the new export endpoint?" | `know-where-it-goes` |
+| "I want sharing, but I'm not sure what I mean yet." | `know-what-you-want` |
+| "You keep editing the wrong page when I say login." | `know-your-words` |
+| "Quiz me on what we just read." | `know-what-you-know` |
+| "I'm stopping here. Write down where we got to." | `know-where-you-left-off` |
+
+A wrong selection is a description problem, not a prompt problem. Fix the description of the skill that fired and the one that should have, then rerun the whole table; narrowing one description often widens another.

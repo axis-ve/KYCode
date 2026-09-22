@@ -81,7 +81,7 @@ def check(root):
 
 def check_archive(path):
     expected = {Path(name).relative_to('skills').as_posix(): (ROOT / name).read_bytes()
-                for name in public_files(ROOT) if name.startswith('skills/know-your-code/')}
+                for name in public_files(ROOT) if name.startswith('skills/')}
     expected['INSTALL.txt'] = (ROOT / 'INSTALL.txt').read_bytes()
     with ZipFile(path) as archive:
         names = archive.namelist()

@@ -17,9 +17,10 @@ def prepare(destination):
     project.mkdir()
     fixture = ROOT / 'evals/fixtures/checkout/cart.py'
     shutil.copy2(fixture, project / 'cart.py')
-    skill = ROOT / 'skills/know-your-code'
-    shutil.copytree(skill, project / '.agents/skills/know-your-code')
-    shutil.copytree(skill, project / '.cursor/skills/know-your-code')
+    skills = ROOT / 'skills'
+    skill = skills / 'know-your-code'
+    for host in ('.agents/skills', '.cursor/skills', '.claude/skills'):
+        shutil.copytree(skills, project / host)
     cart = runpy.run_path(str(project / 'cart.py'))
     lines = [f'DEBUG synthetic heartbeat {i:02d}' for i in range(80)]
     lines[60:60] = [f"display={cart['display_price']('tea')}",

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Know Where It Goes"
+  short_description: "Find where new code belongs in this project"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  brand_color: "#244BFF"
+  default_prompt: "Use $know-where-it-goes to tell me where this new piece of code belongs, which existing file sets the precedent, and what else I have to wire up."

@@ -1,0 +1,16 @@
+{
+  "name": "know-your-code",
+  "owner": {
+    "name": "Veritas Axis"
+  },
+  "metadata": {
+    "description": "Know Your Code: voice-first walkthroughs and debugging conversations grounded in your project."
+  },
+  "plugins": [
+    {
+      "name": "know-your-code",
+      "source": ".",
+      "description": "Talk through your code with voice-first walkthroughs and debugging"
+    }
+  ]
+}

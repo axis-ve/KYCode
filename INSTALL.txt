@@ -1,10 +1,26 @@
 Know Your Code
+Voice-first walkthroughs of your own code, with written references and checks.
 
+Codex
 Copy the know-your-code folder into your project's .agents/skills/ directory.
 The entry point should be .agents/skills/know-your-code/SKILL.md.
 Open that project in Codex and send:
 $know-your-code Help me understand this project.
 If the skill does not appear, restart Codex.
+Use the host's voice controls to talk through the project and ask follow-ups.
+
+Cursor
+Use your existing Cursor account and a model available on your plan.
+No separate subscription, API key, or service is required by this skill.
+Cursor's normal model usage and plan limits apply.
+Copy the know-your-code folder into your project's .cursor/skills/ directory.
+The entry point should be .cursor/skills/know-your-code/SKILL.md.
+Open that project in Cursor and send:
+/know-your-code Help me understand this project.
+If the skill does not appear, reload the window.
+For every local project, copy the folder to ~/.cursor/skills/know-your-code/.
+To speak your question, select /know-your-code in Agent chat and use Cursor's
+voice input to dictate the prompt. Voice controls and playback depend on Cursor.
 
 Source and updates: https://github.com/axis-ve/KYCode
 License: MIT. See know-your-code/LICENSE.

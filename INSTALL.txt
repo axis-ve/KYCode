@@ -1,8 +1,20 @@
 Know Your Code
 Voice-first walkthroughs of your own code, with written references and checks.
 
+This archive contains one folder per skill. know-your-code is the one to start
+with; the others are companions you can install alongside it or leave out.
+
+  know-your-code           Follow one action through your code, end to end.
+  know-your-project        Map an unfamiliar repository before you dive in.
+  know-your-change         Understand what a diff, commit, or pull request does.
+  know-where-it-goes       Find where new code belongs in this project.
+  know-what-you-want       Turn a rough idea into a request that builds right.
+  know-your-words          Match your words to what the code calls them.
+  know-what-you-know       Check your understanding, one question at a time.
+  know-where-you-left-off  Save and resume work across sessions.
+
 Codex
-Copy the know-your-code folder into your project's .agents/skills/ directory.
+Copy the skill folders into your project's .agents/skills/ directory.
 The entry point should be .agents/skills/know-your-code/SKILL.md.
 Open that project in Codex and send:
 $know-your-code Help me understand this project.
@@ -13,14 +25,31 @@ Cursor
 Use your existing Cursor account and a model available on your plan.
 No separate subscription, API key, or service is required by this skill.
 Cursor's normal model usage and plan limits apply.
-Copy the know-your-code folder into your project's .cursor/skills/ directory.
+Copy the skill folders into your project's .cursor/skills/ directory.
 The entry point should be .cursor/skills/know-your-code/SKILL.md.
 Open that project in Cursor and send:
 /know-your-code Help me understand this project.
 If the skill does not appear, reload the window.
-For every local project, copy the folder to ~/.cursor/skills/know-your-code/.
+For every local project, copy the folders to ~/.cursor/skills/ instead.
 To speak your question, select /know-your-code in Agent chat and use Cursor's
 voice input to dictate the prompt. Voice controls and playback depend on Cursor.
+
+Claude Code
+Copy the skill folders into your project's .claude/skills/ directory.
+The entry point should be .claude/skills/know-your-code/SKILL.md.
+For every local project, copy the folders to ~/.claude/skills/ instead.
+Open that project in Claude Code and send:
+Help me understand this project.
+Claude picks the matching skill from what you asked; you can also name one
+directly with /know-your-code.
+If the skill does not appear, run /doctor, then restart Claude Code.
+Installing from the repository as a plugin adds three slash commands and
+two subagents as well. Plugin names carry the plugin prefix, so the commands
+are /know-your-code:orient, /know-your-code:why-broken, and
+/know-your-code:explain-change, and the main skill is
+/know-your-code:know-your-code.
+/plugin marketplace add axis-ve/KYCode
+/plugin install know-your-code@know-your-code
 
 Source and updates: https://github.com/axis-ve/KYCode
 License: MIT. See know-your-code/LICENSE.

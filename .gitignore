@@ -1,4 +1,6 @@
 .DS_Store
+/.cursor/
+/.claude/
 website/
 brand/
 .agents/

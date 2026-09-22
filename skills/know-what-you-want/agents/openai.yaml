@@ -1,0 +1,7 @@
+interface:
+  display_name: "Know What You Want"
+  short_description: "Turn a rough idea into a buildable request"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  brand_color: "#244BFF"
+  default_prompt: "Use $know-what-you-want to turn this rough idea into a request you can build right the first time: settle what the code settles, then ask me at most three questions."

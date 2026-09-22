@@ -1,0 +1,7 @@
+interface:
+  display_name: "Know Your Change"
+  short_description: "Understand what a diff or pull request changes"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  brand_color: "#244BFF"
+  default_prompt: "Use $know-your-change to explain what this change does to the behavior I would notice, what is worth attention, and what I should run before merging it."

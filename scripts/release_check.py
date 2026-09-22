@@ -15,6 +15,8 @@ RULES = {
     'credential-shaped value': re.compile(r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY|gh[pousr]_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9_-]{30,}'),
     'email address': re.compile(r'[\w.+-]+@(?!users\.noreply\.github\.com)[\w.-]+\.[A-Za-z]{2,}'),
 }
+NOREPLY = '@users.noreply.github.com'
+GITHUB_MERGE_COMMITTER = 'noreply' + '@' + 'github.com'
 
 
 def findings(data):
@@ -81,7 +83,7 @@ def check(root):
 
 def check_archive(path):
     expected = {Path(name).relative_to('skills').as_posix(): (ROOT / name).read_bytes()
-                for name in public_files(ROOT) if name.startswith('skills/know-your-code/')}
+                for name in public_files(ROOT) if name.startswith('skills/')}
     expected['INSTALL.txt'] = (ROOT / 'INSTALL.txt').read_bytes()
     with ZipFile(path) as archive:
         names = archive.namelist()
@@ -99,6 +101,11 @@ def check_archive(path):
                 raise ValueError(f'{name}: {hits}')
 
 
+def identity_allowed(author, committer):
+    """Authors must use a GitHub noreply address; GitHub commits pull request merges as itself."""
+    return author.endswith(NOREPLY) and (committer.endswith(NOREPLY) or committer == GITHUB_MERGE_COMMITTER)
+
+
 def check_index(root, paths):
     tracked = subprocess.check_output(['git', '-C', str(root), 'ls-files'], text=True).splitlines()
     if set(tracked) != set(paths):
@@ -109,8 +116,8 @@ def check_history(root, paths):
     check_index(root, paths)
     commits = subprocess.check_output(['git', '-C', str(root), 'rev-list', 'HEAD'], text=True).splitlines()
     for commit in commits:
-        identities = subprocess.check_output(['git', '-C', str(root), 'show', '-s', '--format=%ae%n%ce', commit], text=True).splitlines()
-        if not all(email.endswith('@users.noreply.github.com') for email in identities):
+        author, committer = subprocess.check_output(['git', '-C', str(root), 'show', '-s', '--format=%ae%n%ce', commit], text=True).splitlines()
+        if not identity_allowed(author, committer):
             raise ValueError('Commit identity is not a GitHub noreply address')
         message = subprocess.check_output(['git', '-C', str(root), 'show', '-s', '--format=%B', commit])
         if findings(message):

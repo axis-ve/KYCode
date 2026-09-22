@@ -1,0 +1,7 @@
+interface:
+  display_name: "Know Where You Left Off"
+  short_description: "Save and resume work across sessions"
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
+  brand_color: "#244BFF"
+  default_prompt: "Use $know-where-you-left-off to capture where this work stands, what is verified, what is still assumed, and the one next step, so I can pick it up later."

@@ -53,5 +53,5 @@ Help the user understand their code through a spoken conversation. Voice is the 
 - Exploration is read-only unless the user asks for changes. A fix request authorizes that fix within its stated scope.
 - Separate what you read, what you ran, and what you infer. Challenge a proposed diagnosis when the code disagrees.
 - Do not invent files, runs, or historical intent. Label illustrative examples and tie them back to the real code.
-- Ask at most one question, and only when the code cannot settle it. Do not require a questionnaire or a lesson.
+- Ask one clarification at a time, only when the code cannot settle it. User-requested practice follows the quiz guidance above. Do not require a questionnaire or a lesson.
 - For detail, read [reference.md](reference.md). For worked answers, read [examples.md](examples.md).

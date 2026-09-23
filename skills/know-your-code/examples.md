@@ -1,6 +1,6 @@
 # Examples
 
-Patterns for [SKILL.md](SKILL.md). These examples are illustrative, not reports of inspected user code or completed voice tests.
+Patterns for [SKILL.md](SKILL.md). The spoken examples are illustrative, not reports of completed voice tests. The optional path companions below are grounded in repository fixtures; their commands are expected checks, not claims that they were run.
 
 ## Voice walkthrough and interruption
 
@@ -23,6 +23,35 @@ Opening a spoken walkthrough: "Three steps: the button, the check on how many co
 On a detour: "We're at step two of three, the check on copies left. Your question first: ..." The return bridge then picks up at step two.
 
 Bad: launching into the first function with no sense of how long the path is, or answering a detour and then restarting from the button.
+
+## Optional transcript path from a real action
+
+These compact lines are grounded in the repository's `reading-room` and `notes-app` evaluation fixtures. They illustrate a portable Markdown aid: the spoken walkthrough still explains the behavior, source links are supporting evidence, and the check stays runnable text. Adapt the hops to the current source rather than copying fixture details into another project.
+
+For the reading-room prompt, "Talk me through borrowing two copies of the atlas, then trying another two":
+
+```markdown
+## Code path
+First borrow (3 copies): `borrow("atlas", 2)` -> `borrow` (`library.py:7`) -> decrement (`library.py:10`) -> `True`, copies 1
+Second borrow (1 copy): `borrow("atlas", 2)` -> guard (`library.py:8`) -> `False`, copies stay 1
+
+## Check
+`python3 -c 'import sys; sys.path.insert(0, "evals/fixtures/reading-room"); import library; print(library.borrow("atlas", 2), library.describe("atlas"), library.borrow("atlas", 2), library.describe("atlas"))'`
+```
+
+The [reading-room source](../../evals/fixtures/reading-room/library.py) shows the guard at line 8 and the decrement at line 10. The expected output is `True Field Atlas: 1 copies False Field Atlas: 1 copies`; say "expected" unless the command was actually run.
+
+For "What happens when I press Save?" with the notes-app fixture:
+
+```markdown
+## Code path
+Press Save -> `app.press` (`app.py:10`) -> `on_save` (`handlers.py:6`) -> `save_note` (`notes.py:6`) -> `store.put` (`notes.py:8`) -> note assigned (`store.py:6`) -> in-memory note
+
+## Check
+`python3 -c 'import sys; sys.path.insert(0, "evals/fixtures/notes-app"); import app, store; note_id = app.press("Save", title="My Plans", body="draft"); print(store.get(note_id))'`
+```
+
+The [title helper](../../evals/fixtures/notes-app/text.py) lowercases and trims the title before storing it. A fuller answer can mention that Save also indexes the note through `search.index`, and that `search.py` and `export.py` call the same `clean_title` helper; link those claims to their actual source when discussing a change. The command should print `{'title': 'my plans', 'body': 'draft'}`. Don't describe the in-memory store as durable storage.
 
 ## Reach check before a shared fix
 
@@ -49,7 +78,7 @@ What happens when I press Save? Follow it from the button to storage. Do not cha
 Good answer shape:
 
 ```markdown
-## Path
+## Code path
 Save button -> `handle_save` -> `write_document` -> documents table
 
 ## Stored data

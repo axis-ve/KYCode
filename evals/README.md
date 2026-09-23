@@ -27,6 +27,10 @@ Expected results:
 - The first call returns `True` and leaves one copy.
 - The second call returns `False` and leaves the count unchanged.
 - The explanation includes a runnable check. Source files remain unchanged.
+- When a written path companion is useful or requested, it shows only source-backed hops for this action, with file references that open the relevant source. Any unresolved hop is labeled as an inference rather than a verified fact.
+- The spoken explanation is understandable without the companion. If asked to keep the answer spoken or text-only, the assistant adapts and does not insist on a diagram or path card.
+
+The companion is an optional aid, not a required element in every answer. Record whether it appeared and whether it helped. Assess the host's actual rendering separately: a readable Markdown path in a transcript does not establish that Codex renders a custom MCP App component.
 
 ## Diagnose and fix a bug
 

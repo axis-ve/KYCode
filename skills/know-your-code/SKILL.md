@@ -40,8 +40,8 @@ Help the user understand their code through a spoken conversation. Voice is the 
 5. Explain the path conversationally using the voice guidance above. Put supporting evidence in a compact written companion using the shape below when helpful; adapt it for a text-only request. Keep files unchanged unless the user asked for a change.
 
 ```markdown
-## Path
-[user action] -> [handler] -> [storage or response]
+## Code path
+[visible action] -> [verified handler] -> [verified effect]
 
 ## Stored data
 [what changed, where, in what shape]
@@ -55,6 +55,8 @@ Help the user understand their code through a spoken conversation. Voice is the 
 ## Check
 [one runnable command or step that proves the path]
 ```
+
+The `Code path` line is an optional visual aid for transcript readers, not a required UI or a script to read aloud. Use it when it makes a multi-hop trace easier to follow; skip it for a short answer, when the user asks for spoken-only output, or when it would make the answer busier. Keep each hop source-backed, and link the relevant file and line in the companion using a source-link format known to work in the current host. If links are unavailable or unsupported, show a repository-relative `path:line` plainly. Put the runnable check in text after the path. For branches, show separate short branches instead of drawing a false linear path. See [reference.md](reference.md#transcript-path-companion) for formatting guidance and [examples.md](examples.md) for fixture-grounded examples.
 
 ## Rules
 

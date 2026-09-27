@@ -9,6 +9,21 @@ Detail for [SKILL.md](SKILL.md). Read the section needed, then return to the tra
 3. Data path: validation, request, database or file write, response.
 4. Stop at the first complete path. Do not index the whole repository first.
 
+## Transcript path companion
+
+Use a compact `Code path` only when the trace has enough verified hops that a visual sequence helps the user keep their place. A plain Markdown line with arrows and linked function names remains the portable transcript companion, including when Codex exposes the optional `render_code_path` tool:
+
+```markdown
+## Code path
+Press Save -> `on_save` (`handlers.py:12`) -> `save_note` (`notes.py:8`) -> in-memory note
+```
+
+- Prefer source citations that open the relevant file and line in the current host. Use a repository-relative Markdown link with a line anchor only when that host is known to resolve it, and keep the visible `path:line` in the label. If the host cannot link workspace files, show that path and line as plain text.
+- Keep it to the action, a few meaningful hops, and the final effect. Put branch outcomes on separate lines and label any uncertain hop as an inference instead of presenting it as verified.
+- Keep evidence and the runnable check in ordinary text below the visual path. State whether the check was run; a suggested command is not an observed result.
+- Omit the visual line if it repeats a short answer, the user requests spoken-only output, or it distracts from the explanation. The spoken walkthrough must remain clear without it.
+- For the optional Codex card, pass a concise `summary`, ordered `steps` with a `title` and source-backed `file` and `line` where applicable, and an optional `check` command. The first action can be a user-facing label without a source location; code hops need verified locations. Never pass a guess as a step or turn separate branches into one sequence. Keep the same path and evidence in ordinary text because the host may show only the tool result or no card.
+
 Use the project's own search and test commands. Prefer a narrow search such as the label text before broadening.
 
 ## Match the size of the project

@@ -27,6 +27,10 @@ Expected results:
 - The first call returns `True` and leaves one copy.
 - The second call returns `False` and leaves the count unchanged.
 - The explanation includes a runnable check. Source files remain unchanged.
+- When a written path companion is useful or requested, it shows only source-backed hops for this action, with file references that open the relevant source. Any unresolved hop is labeled as an inference rather than a verified fact.
+- The spoken explanation is understandable without the companion. If asked to keep the answer spoken or text-only, the assistant adapts and does not insist on a diagram or path card.
+
+The companion is an optional aid, not a required element in every answer. For a Codex session with the [local MCP server](../experiments/mcp-code-path/README.md) connected, use a verified multi-hop fixture such as notes-app Save to check that the assistant calls `render_code_path` only after inspecting the source and keeps the written path, source references, and check. The reading-room fixture may also be used when its hops are meaningful and separately verified. Repeat with the server unavailable, a short answer, and an uncertain hop; the tool should be skipped and the text should remain useful. Record tool availability, call arguments, text output, and visual rendering separately. A readable Markdown path or tool result does not establish that Codex desktop renders a custom MCP App component.
 
 ## Diagnose and fix a bug
 

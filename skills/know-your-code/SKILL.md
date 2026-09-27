@@ -40,8 +40,8 @@ Help the user understand their code through a spoken conversation. Voice is the 
 5. Explain the path conversationally using the voice guidance above. Put supporting evidence in a compact written companion using the shape below when helpful; adapt it for a text-only request. Keep files unchanged unless the user asked for a change.
 
 ```markdown
-## Path
-[user action] -> [handler] -> [storage or response]
+## Code path
+[visible action] -> [verified handler] -> [verified effect]
 
 ## Stored data
 [what changed, where, in what shape]
@@ -55,6 +55,14 @@ Help the user understand their code through a spoken conversation. Voice is the 
 ## Check
 [one runnable command or step that proves the path]
 ```
+
+The `Code path` line is an optional visual aid for transcript readers, not a script to read aloud. Use it when it makes a multi-hop trace easier to follow; skip it for a short answer, when the user asks for spoken-only output, or when it would make the answer busier. Keep each hop source-backed, and link the relevant file and line in the companion using a source-link format known to work in the current host. If links are unavailable or unsupported, show a repository-relative `path:line` plainly. Put the runnable check in text after the path. For branches, show separate short branches instead of drawing a false linear path. See [reference.md](reference.md#transcript-path-companion) for formatting guidance and [examples.md](examples.md) for fixture-grounded examples.
+
+### Optional Codex transcript card
+
+If Codex exposes `render_code_path`, call it only for a useful linear walkthrough with at least three meaningful, source-verified steps from the user's action to its effect. Inspect the code before the call; supply only observed steps, repository-relative file paths, and verified line numbers. Keep hypotheses, unverified links, and branching paths out of the card. The tool renders supplied facts; it does not inspect the repository or prove the check ran. Include a check command only when it is safe and applicable, and say separately whether you ran it.
+
+Keep the ordinary written path, source references, and check in the transcript even when calling the tool, so the explanation stays usable if Codex does not render the card. Skip the tool when it is unavailable, the trace is too short or uncertain, the user wants spoken-only output, or a card would add clutter. Do not claim that Codex desktop displayed a card unless it was observed in that host session.
 
 ## Rules
 

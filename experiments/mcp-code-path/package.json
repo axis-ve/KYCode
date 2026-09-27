@@ -1,0 +1,16 @@
+{
+  "name": "know-your-code-mcp-code-path-spike",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild widget.js --bundle --minify --format=iife --outfile=dist/widget.bundle.js",
+    "start": "node server.mjs",
+    "check": "npm run build && node check.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/ext-apps": "^2.0.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "esbuild": "^0.28.2",
+    "zod": "^4.6.5"
+  }
+}

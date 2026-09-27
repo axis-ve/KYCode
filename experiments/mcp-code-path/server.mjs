@@ -55,7 +55,7 @@ server.registerTool(
   "render_code_path",
   {
     title: "Show a code path",
-    description: "Use this after inspecting the repository to show a short, verified user-action-to-code path. Pass only evidence-grounded steps, file paths, and an optional local check. This tool only renders the supplied data; it does not inspect or change files.",
+    description: "Use only after inspecting the repository for a useful linear walkthrough with at least three source-verified steps from user action to effect. Pass evidence-grounded steps, file paths, and an optional local check. This tool only renders the supplied data; it does not inspect or change files.",
     inputSchema: {
       summary: z.string().max(180),
       steps: z.array(z.object({
@@ -63,7 +63,7 @@ server.registerTool(
         file: z.string().max(300).optional(),
         line: z.number().int().positive().optional(),
         detail: z.string().max(300).optional(),
-      })).min(1).max(8),
+      })).min(3).max(8),
       check: z.string().max(240).optional(),
     },
     outputSchema: {
@@ -83,7 +83,14 @@ server.registerTool(
     structuredContent: data,
     content: [{
       type: "text",
-      text: `Code path: ${data.steps.map((step) => step.title).join(" → ")}${data.check ? `\nCheck: ${data.check}` : ""}`,
+      text: [
+        `Code path: ${data.summary}`,
+        ...data.steps.map((step, index) => {
+          const location = step.file ? ` (${step.file}${step.line ? `:${step.line}` : ""})` : "";
+          return `${index + 1}. ${step.title}${location}${step.detail ? ` — ${step.detail}` : ""}`;
+        }),
+        ...(data.check ? [`Check: ${data.check}`] : []),
+      ].join("\n"),
     }],
   }),
 );

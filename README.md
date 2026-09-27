@@ -18,6 +18,8 @@ $skill-installer Install https://github.com/axis-ve/KYCode/tree/main/skills/know
 
 That installs the main skill. To add a companion skill, run the same command with its folder name in place of `know-your-code`, for example `skills/know-your-project`. The [skill list](#the-skills) names all eight.
 
+For a local Codex experiment, an [optional MCP code path card](experiments/mcp-code-path/README.md) can accompany verified multi-hop walkthroughs. The skill works without it and always keeps a readable written path. The local protocol check does not verify Codex desktop card rendering.
+
 Open your project in Codex, then send:
 
 ```text

@@ -31,6 +31,13 @@ evals/fixtures/parcel-room/shipping.py
 evals/fixtures/reading-room/library.py
 evals/prepare.py
 evals/session-checks.md
+experiments/mcp-code-path/.gitignore
+experiments/mcp-code-path/README.md
+experiments/mcp-code-path/check.mjs
+experiments/mcp-code-path/package-lock.json
+experiments/mcp-code-path/package.json
+experiments/mcp-code-path/server.mjs
+experiments/mcp-code-path/widget.js
 release-files.txt
 requirements-dev.txt
 scripts/package_skill.py

@@ -13,18 +13,24 @@ try {
   assert.ok(tool, "render_code_path is advertised");
   assert.equal(tool.annotations?.readOnlyHint, true);
   assert.equal(tool._meta?.ui?.resourceUri, "ui://know-your-code/code-path/v1.html");
+  assert.equal(tool.inputSchema.properties.steps.minItems, 3);
 
   const sample = {
     summary: "A user action reaches the save handler",
     steps: [
       { title: "Click Save", file: "src/Editor.tsx", line: 42 },
-      { title: "Validate and persist", file: "src/save.ts", line: 18, detail: "The handler validates the draft, then writes it." },
+      { title: "Validate draft", file: "src/save.ts", line: 18, detail: "The handler checks the draft." },
+      { title: "Persist note", file: "src/store.ts", line: 27, detail: "The store writes the validated note." },
     ],
     check: "npm test -- --runInBand save",
   };
   const result = await client.callTool({ name: "render_code_path", arguments: sample });
   assert.deepEqual(result.structuredContent, sample);
-  assert.match(result.content[0].text, /Click Save → Validate and persist/);
+  assert.match(result.content[0].text, /Code path: A user action reaches the save handler/);
+  assert.match(result.content[0].text, /1\. Click Save \(src\/Editor\.tsx:42\)/);
+  assert.match(result.content[0].text, /2\. Validate draft \(src\/save\.ts:18\) — The handler checks the draft\./);
+  assert.match(result.content[0].text, /3\. Persist note \(src\/store\.ts:27\) — The store writes the validated note\./);
+  assert.match(result.content[0].text, /Check: npm test -- --runInBand save/);
 
   const { contents } = await client.readResource({ uri: "ui://know-your-code/code-path/v1.html" });
   assert.equal(contents[0].mimeType, "text/html;profile=mcp-app");

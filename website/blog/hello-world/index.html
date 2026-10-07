@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#244bff">
+<title>Hello, world. · Know Your Code</title>
+<meta name="description" content="Our first post: why code gets harder to understand as it grows, where AI help breaks down, what changes when you explain code out loud, and what we're building next.">
+<link rel="canonical" href="https://kycode-lake.vercel.app/blog/hello-world/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Know Your Code">
+<meta property="og:url" content="https://kycode-lake.vercel.app/blog/hello-world/">
+<meta property="og:title" content="Hello, world.">
+<meta property="og:description" content="Why code gets harder to understand as it grows, and what Know Your Code is doing about it.">
+<meta property="og:image" content="https://kycode-lake.vercel.app/blog/hello-world/card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Hello, world. Field notes 001 from Know Your Code. 58% of developer time goes to reading code, and 82% of developers find “what else does this touch?” hard.">
+<meta property="article:published_time" content="2026-09-22">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hello, world.">
+<meta name="twitter:description" content="Why code gets harder to understand as it grows, and what Know Your Code is doing about it.">
+<meta name="twitter:image" content="https://kycode-lake.vercel.app/blog/hello-world/card.png">
+<link rel="icon" type="image/svg+xml" href="../../logo.svg">
+<link rel="stylesheet" href="../blog.css">
+<script src="../blog.js" defer></script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+<header class="masthead">
+  <nav class="topbar" aria-label="Site">
+    <a class="brand" href="../../" aria-label="Know Your Code home"><img src="../../logo.svg" width="38" height="38" alt=""> know your code</a>
+    <a class="topbar-link" href="../">All posts</a>
+  </nav>
+  <div class="hero">
+    <p class="kicker mono"><span>Field notes / 001</span><span><time datetime="2026-09-22">September 22, 2026</time> · 7 min read</span></p>
+    <h1>Hello,<br><span class="word">world.<svg viewBox="0 0 450 30" aria-hidden="true"><path d="M5 21 Q190 -5 440 13"/></svg></span></h1>
+    <p class="dek"><strong>We built Know Your Code so you can talk through the code you shipped until it makes sense.</strong> Before building more, we went looking for where people get stuck. Here's what we found.</p>
+  </div>
+</header>
+
+<main class="post">
+  <p>Know Your Code is a set of skills for AI coding assistants. Ask about something your app does, like “what happens when I press Save?”, and it follows your code and explains the path out loud. The files, and a way to check the answer yourself, arrive in writing alongside.</p>
+  <p>It started as one skill for Codex. It now runs in Codex, Cursor, and Claude Code, and it has grown to eight skills. They map a new project, explain a pull request, and find where new code belongs. A few exist to stop you and your assistant from talking past each other.</p>
+  <p>This is our first post. Instead of a feature list, here's the research shaping what we build next.</p>
+
+  <h2><span class="num">01</span>Most of programming is reading</h2>
+  <div class="stat" data-reveal>
+    <span class="figure" data-count="58">58%</span>
+    <p>of professional developers' time goes to understanding code, not writing it.</p>
+    <span class="mono">78 developers, 3,148 hours tracked · <a href="https://baolingfeng.github.io/papers/tsecomprehension.pdf">Xia et al.</a></span>
+  </div>
+  <p>Juniors spend a bigger share of their time on it than seniors. If you vibe coded your app, you're somewhere odd. You shipped it, but you didn't write it, so every question starts from zero.</p>
+
+  <h2><span class="num">02</span>The question changes as your code grows</h2>
+  <p>One pattern kept showing up across the studies. The size of your codebase changes the question you need answered.</p>
+  <ol class="tiers">
+    <li data-reveal>
+      <div class="tier-text"><span class="size">Small · Tens of files</span>
+      <span class="question">“Where does this happen?”</span><span class="context">A solo project, often built with AI.</span>
+      <span class="breaks">You don't know where the code lives, so it's hard to tell whether a fix worked.</span></div>
+      <svg class="graph" viewBox="0 0 80 48" aria-hidden="true"><path d="M14 24H40M40 24H66"/><circle cx="14" cy="24" r="6" style="--i:0"/><circle cx="40" cy="24" r="6" style="--i:1"/><circle cx="66" cy="24" r="6" style="--i:2"/></svg>
+    </li>
+    <li data-reveal>
+      <div class="tier-text"><span class="size">Medium · Hundreds</span>
+      <span class="question">“What else does this touch?”</span><span class="context">A few contributors, shared helpers.</span>
+      <span class="breaks">A fix for one feature breaks another that shares the same code, and nobody notices until later.</span></div>
+      <svg class="graph" viewBox="0 0 80 48" aria-hidden="true"><path d="M40 24L12 8M40 24L12 40M40 24L68 8M40 24L68 40M40 24L40 5"/><circle cx="12" cy="8" r="5" style="--i:1"/><circle cx="12" cy="40" r="5" style="--i:2"/><circle cx="68" cy="8" r="5" style="--i:3"/><circle cx="68" cy="40" r="5" style="--i:4"/><circle cx="40" cy="5" r="4" style="--i:5"/><circle class="hub" cx="40" cy="24" r="7" style="--i:0"/></svg>
+    </li>
+    <li data-reveal>
+      <div class="tier-text"><span class="size">Large · A million lines</span>
+      <span class="question">“Why is it like this, and what can't I break?”</span><span class="context">Many teams, years of history.</span>
+      <span class="breaks">The rules aren't written down, and the answers are scattered across docs, history, and people.</span></div>
+      <svg class="graph" viewBox="0 0 80 48" aria-hidden="true"><path d="M8 8L24 16L40 6L56 14L72 6M8 24L24 16L40 26L56 14L72 26M8 40L24 32L40 26L56 36L72 42M24 32L24 16M56 36L56 14M40 6L40 26"/><circle cx="8" cy="8" r="3.5" style="--i:0"/><circle cx="24" cy="16" r="3.5" style="--i:1"/><circle cx="40" cy="6" r="3.5" style="--i:2"/><circle cx="56" cy="14" r="3.5" style="--i:3"/><circle cx="72" cy="6" r="3.5" style="--i:4"/><circle cx="8" cy="24" r="3.5" style="--i:5"/><circle cx="40" cy="26" r="3.5" style="--i:6"/><circle cx="72" cy="26" r="3.5" style="--i:7"/><circle cx="8" cy="40" r="3.5" style="--i:8"/><circle cx="24" cy="32" r="3.5" style="--i:9"/><circle cx="56" cy="36" r="3.5" style="--i:10"/><circle cx="72" cy="42" r="3.5" style="--i:11"/></svg>
+    </li>
+  </ol>
+  <p>The middle question is the sneaky one. Researchers call it a reachability question. What can reach this line, and what will a change here reach? Developers ask these all day, and they find them hard.</p>
+  <div class="stat" data-reveal>
+    <span class="figure" data-count="82">82%</span>
+    <p>of developers rated at least one reachability question as hard to answer. They were asking them more than nine times a day.</p>
+    <span class="mono">Survey of 460 developers · <a href="https://dl.acm.org/doi/10.1145/1806799.1806829">LaToza and Myers</a></span>
+  </div>
+
+  <figure class="fig reach" data-reveal data-state="today" aria-labelledby="reach-title">
+    <figcaption class="fig-head"><span class="mono" id="reach-title">Fig. 1 · One helper, three callers</span></figcaption>
+    <p class="fig-intro">In our test project, Save, Search, and Export share one helper that cleans up titles, and it lowercases them. You want Save to keep its capitals. Pick a fix.</p>
+    <div class="fig-controls" role="group" aria-label="Choose a fix">
+      <button type="button" data-set="today" aria-pressed="true">Today</button>
+      <button type="button" data-set="helper" aria-pressed="false">Change the helper</button>
+      <button type="button" data-set="scoped" aria-pressed="false">Change only Save</button>
+    </div>
+    <div class="reach-map">
+      <div class="shared" aria-hidden="true"><span class="shared-label"><span class="s-on">one helper · lowercases</span><span class="s-off">one helper · keeps capitals</span></span></div>
+      <div class="row r-save"><span class="caller">Save</span><span class="arrow" aria-hidden="true">→</span><span class="via"><code class="h">clean_title()</code><code class="own">tidy spaces only</code></span><span class="arrow" aria-hidden="true">→</span><span class="result"><span class="t-today">my plans</span><span class="t-helper">✓ My Plans</span><span class="t-scoped">✓ My Plans</span></span></div>
+      <div class="row r-search"><span class="caller">Search</span><span class="arrow" aria-hidden="true">→</span><span class="via"><code class="h">clean_title()</code></span><span class="arrow" aria-hidden="true">→</span><span class="result"><span class="t-today">finds “plans”</span><span class="t-helper">✕ no results</span><span class="t-scoped">✓ finds “plans”</span></span></div>
+      <div class="row r-export"><span class="caller">Export</span><span class="arrow" aria-hidden="true">→</span><span class="via"><code class="h">clean_title()</code></span><span class="arrow" aria-hidden="true">→</span><span class="result"><span class="t-today">my-plans.md</span><span class="t-helper">✕ My-Plans.md</span><span class="t-scoped">✓ my-plans.md</span></span></div>
+    </div>
+    <p class="fig-caption" id="reach-caption" aria-live="polite">Today, Save runs the title through the helper and loses its capitals. Search and Export use the same helper.</p>
+  </figure>
+  <p>The same research found that experienced developers follow the connections in code. Newer ones follow surface clues and spend a lot of time reading code that turns out not to matter (<a href="http://faculty.washington.edu/ajko/books/cooperative-software-development/comprehension.html">Ko</a>). Newer developers also tend not to ask for help, out of fear of looking incompetent. An assistant you can ask the “obvious” question fixes a small part of a real problem.</p>
+
+  <h2><span class="num">03</span>AI help gets weaker where you need it most</h2>
+  <p>The bigger the codebase, the more you'd want help. That's also where AI struggles.</p>
+  <div class="stat pair" data-reveal>
+    <span><span class="figure" data-count="19">19%</span><span class="label">SLOWER, MEASURED</span></span>
+    <span><span class="figure" data-count="20">20%</span><span class="label">FASTER, AS THEY FELT IT</span></span>
+    <p>Experienced developers working in their own large repositories took longer with AI tools, and believed the opposite.</p>
+    <span class="mono">Randomized trial, 246 tasks · <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/">METR</a></span>
+  </div>
+  <p>The repositories in that trial averaged over a million lines. The researchers point to large, complex codebases and to <a href="https://arxiv.org/html/2507.09089">tacit knowledge the AI doesn't have</a>. Language models also lose track of information in the middle of a long input (<a href="https://arxiv.org/abs/2307.03172">Liu et al.</a>), and a big codebase puts most of what matters in the middle.</p>
+  <p>At the small end, people building with AI describe a different trap. The model misreads the request, then offers the same failed fix again and again.</p>
+  <blockquote>“Vibe coding is one thing, vibe debugging is chaos.”<cite>A developer quoted in <a href="https://arxiv.org/abs/2509.12491">Pimenova et al.</a></cite></blockquote>
+  <p><a href="https://arxiv.org/abs/2605.24521">A 2026 survey of 162 vibe coders</a> found that awareness of the risks is widespread, but the ability to check AI code still depends on experience. Knowing a fix might be wrong doesn't help much if you can't tell whether it is.</p>
+
+  <h2><span class="num">04</span>Explaining code out loud is its own craft</h2>
+  <p>We're voice-first, so we looked closely at people who already work with code by ear. Developers who use screen readers have been doing it for years.</p>
+  <p>Their biggest reported challenge is navigation, especially finding something elsewhere without losing your place (<a href="https://arxiv.org/pdf/2511.03733">HACI review</a>). Audio is linear, so you can't skim ahead (<a href="https://ieeexplore.ieee.org/document/8530030/">AudioHighlight</a>). Long AI replies are hard to follow by ear, and a code change that mixes added and removed lines is harder still (<a href="https://arxiv.org/html/2506.13270v2">screen reader study</a>).</p>
+  <p>Voice interface research adds one more rule. Spoken menus work best at three or four options, and people remember the last one best (<a href="https://www.informit.com/articles/article.aspx?p=170792&amp;seqNum=2">Voice User Interface Design</a>).</p>
+  <figure class="fig voice" data-reveal aria-labelledby="voice-title">
+    <figcaption class="fig-head"><span class="mono" id="voice-title">Fig. 2 · The same answer, two ways</span></figcaption>
+    <p class="fig-intro">Where do my capitals go when I press Save? Both answers below are correct.</p>
+    <div class="voices">
+      <div class="voice-card flat">
+        <div class="voice-top"><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="mono">Reading it out</span></div>
+        <ol class="lines">
+          <li style="--i:0">“notes dot py. Line six.”</li>
+          <li style="--i:1">“def save underscore note, open paren, title, comma, body, close paren, colon.”</li>
+          <li style="--i:2">“Line seven. note equals open brace, quote, title, quote, colon, text dot clean underscore title…”</li>
+        </ol>
+      </div>
+      <div class="voice-card guided">
+        <div class="voice-top"><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="mono">Giving directions</span></div>
+        <ol class="lines">
+          <li style="--i:0">“Three steps, starting at the Save button.”</li>
+          <li style="--i:1">“One. The button hands your title to the save handler.”</li>
+          <li style="--i:2">“Two. The handler runs a cleanup helper, and the helper lowercases it.”</li>
+          <li style="--i:3">“Three. The lowercase title is what gets stored. That's where your capitals go.”</li>
+        </ol>
+      </div>
+    </div>
+  </figure>
+  <p>The second answer is longer, but you can follow it without seeing the screen. It says how many steps are coming, keeps each step to one idea, and ends on the one thing to remember.</p>
+
+  <h2><span class="num">05</span>What we changed</h2>
+  <p>These three shipped alongside this post, in <a href="https://github.com/axis-ve/KYCode/pull/3">the skills repository</a>.</p>
+  <ul class="changes">
+    <li data-reveal><strong>Match the size of your project.</strong> A small project gets a direct trace. A medium one gets a check on what else touches the code. A large one gets a map first, with a plain note of what was and wasn't searched.</li>
+    <li data-reveal><strong>Check what else is affected before calling a fix safe.</strong> Before changing anything, it names the other code that calls or reads what it's about to touch.</li>
+    <li data-reveal><strong>Signpost out loud.</strong> It opens with how many steps are coming and where they start. Spoken lists stay at three items. When you interrupt, it tells you where you were before answering, so the way back is easy.</li>
+  </ul>
+  <p>The test project from Fig. 1 is now part of our test suite. The new version has to spot the shared helper before touching anything, and the check fails if Search or Export changes.</p>
+
+  <h2><span class="num">06</span>What's next</h2>
+  <p>These follow once the first three have been tested in live sessions.</p>
+  <ul class="next">
+    <li data-reveal><strong>Describe changes by ear.</strong> Before and after, one behavior at a time, with a count up front, instead of reading a diff aloud.</li>
+    <li data-reveal><strong>Checks in plain words.</strong> Every check says what you'll see if the fix worked, and what you'll see if it didn't.</li>
+    <li data-reveal><strong>Break the loop.</strong> After two failed attempts at the same fix, stop and diagnose instead of trying a third variation.</li>
+    <li data-reveal><strong>Save a checkpoint first.</strong> Suggest a commit before a change that touches many files, so a bad change is easy to undo.</li>
+  </ul>
+
+  <h2><span class="num">07</span>Try it</h2>
+  <p>Know Your Code is free and open source under the MIT license. Install it for Codex, Cursor, or Claude Code, open your project, and ask something you've been meaning to ask.</p>
+  <ul class="prompts">
+    <li data-reveal>“What happens when I press Save?”</li>
+    <li data-reveal>“My changes disappear on refresh. Why?”</li>
+    <li data-reveal>“I just cloned this. Where do I start?”</li>
+  </ul>
+  <a class="cta" href="https://github.com/axis-ve/KYCode#install" target="_blank" rel="noopener noreferrer">Get Know Your Code on GitHub <span>↗</span></a>
+  <p>If it helps, or if it gets something wrong, <a href="https://github.com/axis-ve/KYCode/issues" target="_blank" rel="noopener noreferrer">tell us on GitHub</a>. That's how the next post gets written.</p>
+
+  <section class="sources" aria-labelledby="sources-title">
+    <h2 id="sources-title">SOURCES</h2>
+    <ol>
+      <li><a href="https://baolingfeng.github.io/papers/tsecomprehension.pdf">Measuring Program Comprehension: A Large-Scale Field Study with Professionals</a>, Xia et al.</li>
+      <li><a href="https://www.cs.ubc.ca/~murphy/papers/other/asking-answering-fse06.pdf">Questions Programmers Ask During Software Evolution Tasks</a>, Sillito, Murphy and De Volder</li>
+      <li><a href="https://dl.acm.org/doi/10.1145/1806799.1806829">Developers Ask Reachability Questions</a>, LaToza and Myers</li>
+      <li><a href="http://faculty.washington.edu/ajko/books/cooperative-software-development/comprehension.html">Cooperative Software Development: Comprehension</a>, Amy J. Ko</li>
+      <li><a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/">Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity</a>, METR (<a href="https://arxiv.org/html/2507.09089">paper</a>)</li>
+      <li><a href="https://arxiv.org/abs/2307.03172">Lost in the Middle: How Language Models Use Long Contexts</a>, Liu et al.</li>
+      <li><a href="https://arxiv.org/abs/2509.12491">Good Vibrations? A Qualitative Study of Co-Creation, Communication, Flow, and Trust in Vibe Coding</a>, Pimenova et al.</li>
+      <li><a href="https://arxiv.org/abs/2605.24521">From Prompting to Verification: How Experience Shapes Vibe Coding Practices</a></li>
+      <li><a href="https://ieeexplore.ieee.org/document/8530030/">AudioHighlight: Code Skimming for Blind Programmers</a></li>
+      <li><a href="https://arxiv.org/pdf/2511.03733">HACI: A Haptic-Audio Code Interface for Visually Impaired Introductory Programming Students</a></li>
+      <li><a href="https://arxiv.org/html/2506.13270v2">Screen Reader Programmers in the Vibe Coding Era</a></li>
+      <li><a href="https://www.informit.com/articles/article.aspx?p=170792&amp;seqNum=2">Voice User Interface Design: Minimizing Cognitive Load</a></li>
+    </ol>
+  </section>
+</main>
+
+<footer class="site-footer"><div><span>FOR THE “WAIT, WHY DOES THAT WORK?” PEOPLE.</span><a href="https://github.com/axis-ve/KYCode" target="_blank" rel="noopener noreferrer">GitHub ↗</a><span>A FEW MORE LIGHTBULBS.<span class="star">✳</span></span></div></footer>
+</body>
+</html>

@@ -1,4 +1,5 @@
 import importlib.util
+from io import BytesIO
 from pathlib import Path
 import tempfile
 import struct
@@ -64,6 +65,33 @@ class ReleaseChecks(unittest.TestCase):
                 output.writestr('INSTALL.txt', '/' + 'Users/person/work')
             with self.assertRaises(ValueError):
                 release.check_archive(archive)
+
+    def test_zip_download_contents_are_scanned(self):
+        buffer = BytesIO()
+        with ZipFile(buffer, 'w') as archive:
+            archive.writestr('example.py', 'secret = "ghp_' + 'a' * 36 + '"')
+        self.assertEqual(release.findings(buffer.getvalue()),
+                         [(1, 'example.py: credential-shaped value')])
+
+    def test_zip_download_refuses_unsafe_members_and_metadata(self):
+        for name, comment in (('../outside.txt', b''), ('/absolute.txt', b''),
+                              ('safe.txt', b'private metadata')):
+            buffer = BytesIO()
+            with ZipFile(buffer, 'w') as archive:
+                archive.writestr(name, 'Nothing private here.')
+                archive.comment = comment
+            with self.subTest(name=name, comment=comment), self.assertRaises(ValueError):
+                release.findings(buffer.getvalue())
+
+    def test_website_downloads_match_the_sources(self):
+        release.check_archive(ROOT / 'website/know-your-code.zip')
+        folder = ROOT / 'website/example'
+        with ZipFile(folder / 'saved-text-example.zip') as archive:
+            self.assertEqual(set(archive.namelist()),
+                             {'README.txt', 'api.py', 'demo.py', 'documents.py',
+                              'editor.py', 'save_queue.py', 'storage.py'})
+            for name in archive.namelist():
+                self.assertEqual(archive.read(name), (folder / name).read_bytes())
 
     def test_incomplete_archive_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:

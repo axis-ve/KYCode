@@ -15,7 +15,9 @@ python3 scripts/release_check.py
 
 On Windows, use `.venv\Scripts\python.exe` instead of `.venv/bin/python`.
 
-Repository tests check YAML, licenses, documentation links, the Cursor and Claude plugin manifests, the Claude commands and subagents, download contents, privacy detection, and fixture arithmetic. They do not run Codex, Cursor, or Claude Code, and they do not validate voice. Follow the [evaluation guide](evals/README.md) for behavioral changes. Report failures as well as successes.
+Repository tests check YAML, licenses, documentation links, the Cursor and Claude plugin manifests, the Claude commands and subagents, download contents, privacy detection, and fixture arithmetic. They also check that the website's ZIP downloads match their source files. They do not run Codex, Cursor, or Claude Code, and they do not validate voice. Follow the [evaluation guide](evals/README.md) for behavioral changes. Report failures as well as successes.
+
+For website changes, follow the [preview instructions](website/README.txt), review desktop and mobile layouts, and check keyboard controls, reduced motion, and no-JavaScript reading. Article 002's editor should reproduce the same outcomes as `python3 -B website/example/demo.py`, including both choices after a revision conflict. Browser review captures belong in the gitignored `website/review/` folder.
 
 ## Keep the skill focused
 

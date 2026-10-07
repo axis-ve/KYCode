@@ -8,6 +8,23 @@ Start with something your app does and talk it through: "What happens when I pre
 
 ## Install
 
+### All eight skills
+
+From your project's folder, run the command for your app. This uses the [Skills CLI](https://skills.sh/docs/cli), adds all eight skills to that project, and requires Node.js 22.20 or newer and Git. Follow the installer's prompts.
+
+```sh
+# Codex
+npx skills add axis-ve/KYCode --agent codex --skill "*"
+
+# Cursor
+npx skills add axis-ve/KYCode --agent cursor --skill "*"
+
+# Claude Code
+npx skills add axis-ve/KYCode --agent claude-code --skill "*"
+```
+
+For native app installation or a manual copy, use the instructions below.
+
 ### Codex
 
 Send this in Codex:
@@ -165,6 +182,16 @@ Wait for my answer before explaining.
 ## Contribute
 
 Read the [skill instructions](skills/know-your-code/SKILL.md), try the [behavioral evaluation cases](evals/README.md), or see [Contributing](CONTRIBUTING.md) to report a problem and run the repository checks.
+
+## Website
+
+The [static website](website/README.txt) includes the landing page, two articles, and a working editor simulation of a delayed autosave. Preview it from this repository:
+
+```sh
+python3 -m http.server 4321 --bind 127.0.0.1 --directory website
+```
+
+Open `http://localhost:4321/`. No build step or backend is needed. The simulation uses an in-memory store; its [companion Python example](website/example/README.txt) uses SQLite. Run `python3 -B website/example/demo.py` to check the save scenarios.
 
 ## License
 

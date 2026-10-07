@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#244bff">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Finding the write that undid your save · Know Your Code</title>
+  <meta name="description" content="Follow a disappearing edit through an unfamiliar codebase, reproduce the overwrite, and check a fix that protects newer work.">
+  <link rel="icon" type="image/svg+xml" href="../../logo.svg">
+  <link rel="stylesheet" href="../blog.css">
+  <link rel="stylesheet" href="article.css">
+  <script src="../blog.js" defer></script>
+  <script src="article.js" defer></script>
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+<header class="masthead">
+  <nav class="topbar" aria-label="Site">
+    <a class="brand" href="../../" aria-label="Know Your Code home"><img src="../../logo.svg" width="38" height="38" alt=""> know your code</a>
+    <a class="topbar-link" href="../">All posts</a>
+  </nav>
+  <div class="hero">
+    <div class="hero-copy">
+    <p class="kicker mono"><span>Field notes / 002</span><span>Draft preview · 6 min read</span></p>
+    <h1>Finding the write<br>that undid<br><span class="word">your save.<svg viewBox="0 0 450 30" aria-hidden="true"><path d="M5 21 Q190 -5 440 13"/></svg></span></h1>
+    <p class="dek"><strong>Your app says “Saved.” Then the old paragraph comes back.</strong> Follow the text through the code, find the other writer, and check what the fix really guarantees.</p>
+    </div>
+    <div class="hero-scene" aria-label="Illustration: a queued earlier draft overwrites a successfully saved paragraph">
+      <div class="queued-paper" aria-hidden="true"><span class="paper-label">Held in the queue</span><strong>Earlier draft</strong><span class="paper-lines"></span><span class="queue-tag">Late arrival ↘</span></div>
+      <svg class="paper-arrow" viewBox="0 0 110 130" aria-hidden="true"><path d="M18 5 C105 2 99 65 58 91 Q34 107 58 117 M45 109 L58 118 L62 99"/></svg>
+      <div class="stored-paper" aria-hidden="true"><span class="paper-label">The stored document</span><div class="paper-title"><span class="paper-new">Finished<br>paragraph.</span><span class="paper-old">Earlier<br>draft.</span></div><span class="paper-lines"></span><span class="saved-stamp">Saved ✓</span><span class="write-count">2 writes. Both successful.</span></div>
+      <p class="scene-caption" aria-hidden="true">A later request.<br>An earlier draft.</p>
+      <button class="hero-replay" type="button" aria-label="Replay the overwrite illustration"><span aria-hidden="true">↻</span> Replay</button>
+    </div>
+  </div>
+</header>
+
+<nav class="chapter-nav" aria-label="Article sections">
+  <span class="mono chapter-label">On the trail</span>
+  <ol><li><a href="#follow-the-text"><span>01</span>Follow the text</a></li><li><a href="#the-other-write"><span>02</span>The other write</a></li><li><a href="#check-the-revision"><span>03</span>Check the revision</a></li><li><a href="#handle-the-conflict"><span>04</span>Handle the conflict</a></li><li><a href="#check-the-fix"><span>05</span>Check the fix</a></li><li><a href="#try-it"><span>06</span>Try it yourself</a></li></ol>
+  <span class="chapter-progress"><span></span></span>
+</nav>
+<main class="post" id="article">
+  <p>You edit a paragraph, press Save, and get a reassuring message. A moment later, you reload. The old paragraph is back.</p>
+  <p>Somewhere in the codebase, something disagrees with what you just saw.</p>
+  <p>An unfamiliar project gives you plenty of places to look. There’s an editor, a save handler, an autosave queue, a service, and a database layer. Searching for “save” finds several functions. Each looks reasonable on its own.</p>
+  <p>The useful question is where your text went, and what happened to it afterward.</p>
+  <p>In <a href="../hello-world/">our first post</a>, we looked at the research behind Know Your Code. This time, we’re following one symptom through code and checking a fix.</p>
+  <aside class="example-note" data-reveal><span class="mono">About the example</span><p>The example is constructed, so you can reproduce it without someone else’s project or data. The editor, queue, and API boundary are modeled in Python. The storage is a real SQLite database. There’s no browser or network timing to guess at: we control the order of the saves.</p></aside>
+
+  <h2 id="follow-the-text" data-reveal><span class="num">01</span>Follow the text</h2>
+  <p>Start with a question you recognize:</p>
+  <blockquote data-reveal>“My saved text comes back as an older draft. Follow the save path and show me how that could happen. Don’t change anything yet.”</blockquote>
+  <p>That gives the investigation a destination. We need to explain the disappearing text.</p>
+  <p>The editor has two ways to save. Pressing Save sends the current text immediately. Autosave takes a snapshot and puts it in a queue.</p>
+  <p>Both eventually reach the same document service and database write.</p>
+  <p>The important detail is what goes into the queue. It holds a copy of the text from the moment autosave was scheduled. Editing the paragraph afterward doesn’t update that copy.</p>
+
+  <h2 id="the-other-write" data-reveal><span class="num">02</span>The later write carries older text</h2>
+  <p>Autosave has already queued “Earlier draft” at revision zero. You keep editing and press Save. Your current paragraph reaches storage first—then that older snapshot gets its turn.</p>
+  <p>Try that order yourself. The browser simulation below follows the same rules as the Python model. You control the text and the order; there is no network or backend.</p>
+  <figure class="fig save-lab" id="save-lab" aria-labelledby="lab-title" data-scenario="before" data-phase="ready">
+    <figcaption class="fig-head"><span class="mono">The experiment / Document 01</span><span class="lab-local mono">Local simulation</span></figcaption>
+    <h3 id="lab-title">Save it. Then reload it.</h3>
+    <p class="fig-intro">An older snapshot is waiting. Edit the paragraph, save, and see which text comes back.</p>
+    <div class="lab-interactive">
+      <div class="fig-controls" role="group" aria-label="Choose a save scenario">
+        <button type="button" data-scenario="before" aria-pressed="true">Original</button>
+        <button type="button" data-scenario="after" aria-pressed="false">Revision check</button>
+        <button type="button" data-scenario="reverse" aria-pressed="false">Autosave first</button>
+      </div>
+      <div class="lab-rule"><span id="lab-rule">Manual save first · revision check off</span><button type="button" id="lab-reset">↻ Reset</button></div>
+      <div class="lab-playback"><span id="lab-phase" class="mono">Ready when you are</span><button type="button" id="lab-play" hidden>Pause</button></div>
+      <div class="lab-timer" aria-hidden="true"><span></span></div>
+      <div class="lab-workbench">
+        <div class="lab-editor">
+          <div class="lab-pane-heading"><label for="lab-draft">Your editor</label><span class="revision-badge">Loaded revision <span id="lab-editor-revision">0</span></span></div>
+          <textarea id="lab-draft" rows="3" maxlength="500" spellcheck="false" placeholder="Write the paragraph you want to keep." aria-describedby="lab-editor-note">Finished paragraph</textarea>
+          <p id="lab-editor-note">Make this paragraph yours. The queued copy won’t change.</p>
+          <div class="lab-actions"><button type="button" id="lab-save">Save paragraph <span aria-hidden="true">↗</span></button><button type="button" id="lab-reload" disabled>Reload <span aria-hidden="true">↶</span></button></div>
+        </div>
+        <div class="lab-storage" data-result="neutral">
+          <div class="lab-pane-heading"><span>Stored document</span><span class="revision-badge">Revision <span id="lab-stored-revision">0</span></span></div>
+          <p id="lab-stored-text">Starting text</p>
+          <div class="lab-storage-foot"><span id="lab-storage-note">This is what a fresh read would return.</span><span class="lab-storage-glyph" aria-hidden="true">↙</span></div>
+        </div>
+      </div>
+      <div class="lab-queue"><span class="queue-symbol" aria-hidden="true">↳</span><div><span class="mono">Queued snapshot · revision 0</span><strong>Earlier draft</strong></div><span id="lab-queue-status" class="status">Waiting</span></div>
+      <ol class="lab-events" aria-label="Save requests">
+        <li data-state="waiting"><span class="event-number">01</span><div><strong id="lab-first-title">Manual save</strong><span id="lab-first-body">Your paragraph · revision 0</span></div><span class="status" id="lab-first-status">Ready</span></li>
+        <li data-state="waiting"><span class="event-number">02</span><div><strong id="lab-second-title">Delayed autosave</strong><span id="lab-second-body">Earlier draft · revision 0</span></div><span class="status" id="lab-second-status">Queued</span></li>
+      </ol>
+      <div class="lab-verdict" data-result="neutral"><span class="mono" id="lab-verdict-label">Watch the other writer</span><p id="lab-verdict">A “Saved” message describes one write. What happens after it?</p></div>
+      <div class="lab-decision" hidden>
+        <p><strong>Compare the two paragraphs above.</strong> Your local draft has not been saved. Choose whether to replace the stored text or use it.</p>
+        <div><button type="button" id="lab-keep">Keep my draft &amp; save</button><button type="button" id="lab-use">Use stored text</button></div>
+      </div>
+      <details class="lab-source" open>
+        <summary>Follow the write in the source <span aria-hidden="true">+</span></summary>
+        <p class="mono source-eyebrow">The same ID, text, and revision at every step</p>
+        <div class="source-steps" role="group" aria-label="Inspect the save path">
+          <button type="button" data-source="editor" aria-pressed="true"><span>01</span> Capture</button>
+          <button type="button" data-source="queue" aria-pressed="false"><span>02</span> Queue</button>
+          <button type="button" data-source="service" aria-pressed="false"><span>03</span> Pass along</button>
+          <button type="button" data-source="storage" aria-pressed="false"><span>04</span> Write</button>
+        </div>
+        <div class="source-detail"><div><a id="lab-source-file" href="../../example/editor.py" target="_blank" rel="noopener noreferrer">editor.py · snapshot() ↗</a><span class="mono">Python excerpt</span></div><pre><code id="lab-source-code">return {'id': self.document_id, 'body': self.body, 'revision': self.revision}</code></pre><p id="lab-source-note">Each request carries the document ID, the text, and the revision it was based on.</p></div>
+      </details>
+      <p class="lab-footnote">Reload reads the simulated store. A conflicted draft stays open for comparison. Reset restarts with your paragraph; nothing persists beyond this page.</p>
+      <span class="sr-only" id="lab-announcement" role="status" aria-live="polite" aria-atomic="true"></span>
+    </div>
+    <noscript><p>The interactive experiment needs JavaScript. These are the results of the same checked Python scenarios:</p><div class="table-scroll"><table><thead><tr><th scope="col">Scenario</th><th scope="col">Stored text</th><th scope="col">What happened</th></tr></thead><tbody><tr><th scope="row">Original</th><td>Earlier draft · revision 2</td><td>Both writes succeed. The older snapshot overwrites the finished paragraph.</td></tr><tr><th scope="row">Revision check</th><td>Finished paragraph · revision 1</td><td>The manual save succeeds; the stale autosave gets a conflict.</td></tr><tr><th scope="row">Autosave first</th><td>Earlier draft · revision 1</td><td>The manual save conflicts. “Finished paragraph” stays in the editor, unsaved.</td></tr></tbody></table></div><p><a href="../../example/editor.py">Capture the snapshot</a> → <a href="../../example/save_queue.py">Queue a copy</a> → <a href="../../example/documents.py">Pass it to storage</a> → <a href="../../example/storage.py">Check and write</a>.</p></noscript>
+  </figure>
+  <div class="finding" data-reveal><span class="mono">The discovery</span><strong>Later <span class="not-equal">≠</span><br><span class="finding-word">newer.<svg viewBox="0 0 420 35" aria-hidden="true"><path d="M8 22 Q190 4 405 17 M20 31 Q192 15 393 25"/></svg></span></strong><p>The request order changed.<br>The age of the text didn’t.</p><span class="finding-mark" aria-hidden="true">✳</span></div>
+  <p>The finished paragraph reached the database. An older snapshot replaced it afterward.</p>
+  <p>That changes where we should work. Reloading faithfully reads the value currently stored. The database accepted both writes. The missing rule is how to decide whether a request still has permission to replace the document.</p>
+
+  <h2 id="check-the-revision" data-reveal><span class="num">03</span>Use the revision already on the path</h2>
+  <p>To get there, we followed the same pieces of information through each layer: the document’s ID, its text, and its revision.</p>
+  <p>A revision is a number that changes whenever the document is saved. The editor loads revision zero. A successful save moves the stored document to revision one.</p>
+  <p>Our queued autosave still carries revision zero. So does the manual save that was prepared before either request completed.</p>
+  <p>The original database update receives that number but doesn’t use it. Its rule is simply: find this document and replace its text.</p>
+  <div class="code-block" data-reveal><span class="mono">Before · Match the document</span><pre><code>UPDATE documents
+SET body = ?, revision = revision + 1
+WHERE id = ?</code></pre></div>
+  <p>The revision gets incremented, but nothing checks whether the incoming request is based on the current version.</p>
+  <p>The correction adds that condition:</p>
+  <div class="code-block corrected" data-reveal><span class="mono">After · Match the document and its revision</span><pre><code>UPDATE documents
+SET body = ?, revision = revision + 1
+WHERE id = ? <mark>AND revision = ?</mark></code></pre></div>
+  <p>In plain words:</p>
+  <blockquote class="rule-quote" data-reveal>“Replace this document only if it is still the version you edited.”<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 33 L24 48 L56 13"/></svg></blockquote>
+  <p>The comparison and the write happen in the same database statement. If the revision has changed, no row is updated. The service reports a conflict, and the API model returns status <code>409</code>.</p>
+  <p>Now we repeat the original sequence.</p>
+  <p>The manual save arrives with revision zero. It succeeds and moves the document to revision one. The delayed autosave also arrives with revision zero. Its condition no longer matches, so it cannot replace the finished paragraph.</p>
+  <p class="experiment-return"><a href="#save-lab" data-try-scenario="after">Try the same paragraph with the revision check ↑</a></p>
+  <p>That fixes the reproduced overwrite.</p>
+
+  <h2 id="handle-the-conflict" data-reveal><span class="num">04</span>A conflict still needs a decision</h2>
+  <p>It also creates a responsibility for the editor. A rejected save must leave the user’s draft available. Otherwise, preventing one kind of loss could introduce another.</p>
+  <p>So the example keeps the text in the editor and explains what happened:</p>
+  <blockquote data-reveal>“The document changed. Your draft is still here; compare it before saving again.”</blockquote>
+  <p>There’s a limit to what the revision check can decide. It knows whether the document has changed. It doesn’t know which paragraph the user prefers.</p>
+  <p>That distinction becomes clear when we reverse the request order.</p>
+  <p>Suppose the autosave runs first. It stores “Earlier draft” and advances the revision. The manual save then arrives with the old revision and gets a conflict.</p>
+  <p class="experiment-return"><a href="#save-lab" data-try-scenario="reverse">Let autosave arrive first in the experiment ↑</a></p>
+  <p>The finished paragraph remains in the editor, but it hasn’t been stored. The user needs to review the current document and choose how to proceed.</p>
+  <p>Automatically retrying every rejected write would let stale text overwrite newer work again. A complete editor needs a deliberate policy for conflicts: compare versions, merge suitable changes, or let the user choose a replacement. This example makes that choice visible and checks that a save after review can succeed.</p>
+  <p>We also tried two editors loading the same document revision. The first saves successfully. The second gets a conflict and retains its own draft.</p>
+
+  <h2 id="check-the-fix" data-reveal><span class="num">05</span>Check more than the happy path</h2>
+  <p>Across the checks, we established four things:</p>
+  <ul class="check-results"><li data-reveal><span class="check-marker" aria-hidden="true">✓</span><div>The original sequence reproduces the overwrite.</div></li><li data-reveal><span class="check-marker" aria-hidden="true">✓</span><div>The revision check blocks a delayed stale save.</div></li><li data-reveal><span class="check-marker" aria-hidden="true">✓</span><div>Reversing the order produces a visible conflict while preserving local text.</div></li><li data-reveal><span class="check-marker" aria-hidden="true">✓</span><div>Two editors cannot silently replace each other’s changes from the same starting revision.</div></li></ul>
+  <p>Reopening the database confirms that the accepted result is stored beyond the original connection.</p>
+  <p>Those checks give us a useful boundary around the conclusion. We’ve verified the state transitions in this example. The browser experiment illustrates those rules with controlled timing and an in-memory store. A production editor would still need checks for its actual queue, network requests, and conflict interface.</p>
+
+  <h2 id="try-it" data-reveal><span class="num">06</span>One question makes the code less unfamiliar</h2>
+  <p>This is the kind of understanding we want Know Your Code to help build.</p>
+  <p>An unfamiliar codebase becomes easier to navigate when you carry one concrete question through it. Here, the question led us from the editor to the queue, from the queue to the database, and from an apparently successful save to a missing revision condition.</p>
+  <p>Following the text mattered more than reading every file. Following the second writer mattered more than stopping at the first successful request. Trying the opposite order exposed what the fix still needed from the user.</p>
+  <p>You can ask the same questions in your own project:</p>
+  <ul class="prompts"><li data-reveal>“What value does this action send?”</li><li data-reveal>“What else can write to the same place?”</li><li data-reveal>“What happens if those writes arrive in the opposite order?”</li></ul>
+  <p>Start with one behavior you can recognize. Ask for the path, the competing writers, and a check you can run. By the end, “my text disappeared” should become a specific sequence you can explain—and a result you can verify.</p>
+  <a class="cta" href="https://github.com/axis-ve/KYCode#install" target="_blank" rel="noopener noreferrer">Try Know Your Code <span aria-hidden="true">↗</span></a>
+  <section class="sources" aria-labelledby="example-title"><h2 id="example-title">Run the example</h2><p class="example-download">The companion uses the Python standard library and temporary SQLite databases. <a href="../../example/saved-text-example.zip" download>Download the example</a>, extract it, and run:</p><div class="code-block"><pre><code>python3 -B demo.py</code></pre></div><p class="example-download">It checks the overwrite, the revision guard, both arrival orders, and conflicting editors. <a href="../../example/demo.py">Read the check</a> · <a href="../../example/storage.py">Read the database write</a></p></section>
+</main>
+<footer class="site-footer"><div><span>FOR THE “WAIT, WHY DOES THAT WORK?” PEOPLE.</span><a href="https://github.com/axis-ve/KYCode" target="_blank" rel="noopener noreferrer">GitHub ↗</a><span>A FEW MORE LIGHTBULBS.<span class="star">✳</span></span></div></footer>
+</body>
+</html>

@@ -1,5 +1,6 @@
 """Check the explicit public file set and optionally copy it into a fresh directory."""
 import argparse
+from io import BytesIO
 from pathlib import Path
 import re
 import shutil
@@ -7,7 +8,7 @@ import struct
 import subprocess
 import sys
 import zlib
-from zipfile import ZipFile
+from zipfile import BadZipFile, ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 RULES = {
@@ -20,12 +21,42 @@ GITHUB_MERGE_COMMITTER = 'noreply' + '@' + 'github.com'
 
 
 def findings(data):
+    if data.startswith((b'PK\x03\x04', b'PK\x05\x06')):
+        return zip_findings(data)
     if data.startswith(b'\x89PNG\r\n\x1a\n'):
         check_png(data)
         return []
     text = data.decode('utf-8')
     return [(number, kind) for number, line in enumerate(text.splitlines(), 1)
             for kind, pattern in RULES.items() if pattern.search(line)]
+
+
+def zip_findings(data):
+    """Scan downloadable files without extracting them or skipping their contents."""
+    problems = []
+    try:
+        with ZipFile(BytesIO(data)) as archive:
+            if archive.comment or any(entry.extra or entry.comment for entry in archive.infolist()):
+                raise ValueError('ZIP contains unsupported metadata')
+            names = archive.namelist()
+            if len(names) != len(set(names)):
+                raise ValueError('ZIP contains duplicate members')
+            if sum(entry.file_size for entry in archive.infolist()) > 50 * 1024 * 1024:
+                raise ValueError('ZIP exceeds the scan size limit')
+            for entry in archive.infolist():
+                name = entry.filename
+                member = Path(name)
+                if (member.is_absolute() or '..' in member.parts or '\\' in name
+                        or (entry.external_attr >> 16) & 0o170000 == 0o120000):
+                    raise ValueError('ZIP contains an unsafe member')
+                problems.extend((line, f'{name}: {kind}') for line, kind in findings(name.encode()))
+                content = archive.read(entry)
+                if content.startswith((b'PK\x03\x04', b'PK\x05\x06')):
+                    raise ValueError('Nested ZIP files are not supported')
+                problems.extend((line, f'{name}: {kind}') for line, kind in findings(content))
+    except BadZipFile as error:
+        raise ValueError('Invalid ZIP structure or checksum') from error
+    return problems
 
 
 def check_png(data):

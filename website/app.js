@@ -140,8 +140,10 @@ let providerIndex = 0;
 let providerTimer;
 let providerHovered = false;
 let providerPinned = false;
+// The stylesheet owns the theme colours; the browser chrome follows --bg once it settles.
 const themeColor = document.querySelector('meta[name=theme-color]');
-const themeColors = { codex: '#244bff', cursor: '#1f2023', claude: '#b4532f' };
+const syncThemeColor = () => { themeColor.content = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim(); };
+document.documentElement.addEventListener('transitionend', event => { if (event.propertyName === '--bg') syncThemeColor(); });
 
 function fitProvider() {
   const width = `${Math.ceil(providers[providerIndex].getBoundingClientRect().width)}px`;
@@ -156,7 +158,7 @@ function showProvider(index) {
   providerIndex = index;
   providerBadge.dataset.provider = providerNames[index];
   document.documentElement.dataset.theme = providerNames[index];
-  themeColor.content = themeColors[providerNames[index]];
+  syncThemeColor();
   fitProvider();
 }
 

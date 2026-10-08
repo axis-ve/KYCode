@@ -44,6 +44,17 @@ Rotation pauses on hover, focus, open explanations or dialogs, and hidden tabs.
 Reduced motion shows a static group of app icons. A no-JavaScript view uses
 the first label, with all three apps named in the accessible description.
 
+Each app has a colour theme, set by data-theme on the html element: blue for
+Codex, dark grey for Cursor, orange for Claude Code. The page switches theme
+as the badge rotates. Choosing an app in the install dialog keeps its theme
+and stops the rotation. The Claude orange (#b4532f) is darker than the brand
+shade so white body text meets WCAG AA contrast.
+
+Icons on the landing page are inline SVG. Characters such as ↗︎ and ✳︎ are
+missing from the site's fonts, and phones substitute colour emoji for them.
+Where the blog uses those characters, each is followed by U+FE0E to request
+text presentation.
+
 Screenshots and checks for these refinements are in review/refinement/.
 The Skills CLI installation was checked with all three agents in a temporary
 project using the real public repository. No global installation was made.

@@ -53,7 +53,7 @@
     };
     const [file, method, code, note] = sources[name];
     sourceButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.source === name)));
-    el('source-file').textContent = `${file} · ${method} ↗`;
+    el('source-file').textContent = `${file} · ${method} ↗︎`;
     el('source-file').href = `../../example/${file}`;
     el('source-code').replaceChildren();
     if (name === 'storage' && guarded) {
@@ -97,13 +97,13 @@
     el('draft').readOnly = false;
     el('editor-revision').textContent = 0;
     el('editor-note').textContent = 'Make this paragraph yours. The queued copy won’t change.';
-    el('save').disabled = false; el('save').innerHTML = 'Save paragraph <span aria-hidden="true">↗</span>';
+    el('save').disabled = false; el('save').innerHTML = 'Save paragraph <span aria-hidden="true">↗︎</span>';
     el('reload').disabled = true;
     el('play').hidden = true;
     lab.querySelector('.lab-decision').hidden = true;
     el('queue-status').textContent = 'Waiting'; el('queue-status').classList.remove('conflict');
     el('storage-note').textContent = 'This is what a fresh read would return.';
-    lab.querySelector('.lab-storage-glyph').textContent = '↙';
+    lab.querySelector('.lab-storage-glyph').textContent = '↙︎';
     el('phase').textContent = 'Ready when you are';
     timer.style.transform = 'scaleX(0)';
     const first = scenarios[name].reverse ? 'Autosave' : 'Manual save';

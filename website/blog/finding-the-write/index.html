@@ -27,7 +27,7 @@
     <p class="dek"><strong>Your app says “Saved.” Then the old paragraph comes back.</strong> Follow the text through the code, find the other writer, and check what the fix really guarantees.</p>
     </div>
     <div class="hero-scene" aria-label="Illustration: a queued earlier draft overwrites a successfully saved paragraph">
-      <div class="queued-paper" aria-hidden="true"><span class="paper-label">Held in the queue</span><strong>Earlier draft</strong><span class="paper-lines"></span><span class="queue-tag">Late arrival ↘</span></div>
+      <div class="queued-paper" aria-hidden="true"><span class="paper-label">Held in the queue</span><strong>Earlier draft</strong><span class="paper-lines"></span><span class="queue-tag">Late arrival ↘︎</span></div>
       <svg class="paper-arrow" viewBox="0 0 110 130" aria-hidden="true"><path d="M18 5 C105 2 99 65 58 91 Q34 107 58 117 M45 109 L58 118 L62 99"/></svg>
       <div class="stored-paper" aria-hidden="true"><span class="paper-label">The stored document</span><div class="paper-title"><span class="paper-new">Finished<br>paragraph.</span><span class="paper-old">Earlier<br>draft.</span></div><span class="paper-lines"></span><span class="saved-stamp">Saved ✓</span><span class="write-count">2 writes. Both successful.</span></div>
       <p class="scene-caption" aria-hidden="true">A later request.<br>An earlier draft.</p>
@@ -78,12 +78,12 @@
           <div class="lab-pane-heading"><label for="lab-draft">Your editor</label><span class="revision-badge">Loaded revision <span id="lab-editor-revision">0</span></span></div>
           <textarea id="lab-draft" rows="3" maxlength="500" spellcheck="false" placeholder="Write the paragraph you want to keep." aria-describedby="lab-editor-note">Finished paragraph</textarea>
           <p id="lab-editor-note">Make this paragraph yours. The queued copy won’t change.</p>
-          <div class="lab-actions"><button type="button" id="lab-save">Save paragraph <span aria-hidden="true">↗</span></button><button type="button" id="lab-reload" disabled>Reload <span aria-hidden="true">↶</span></button></div>
+          <div class="lab-actions"><button type="button" id="lab-save">Save paragraph <span aria-hidden="true">↗︎</span></button><button type="button" id="lab-reload" disabled>Reload <span aria-hidden="true">↶</span></button></div>
         </div>
         <div class="lab-storage" data-result="neutral">
           <div class="lab-pane-heading"><span>Stored document</span><span class="revision-badge">Revision <span id="lab-stored-revision">0</span></span></div>
           <p id="lab-stored-text">Starting text</p>
-          <div class="lab-storage-foot"><span id="lab-storage-note">This is what a fresh read would return.</span><span class="lab-storage-glyph" aria-hidden="true">↙</span></div>
+          <div class="lab-storage-foot"><span id="lab-storage-note">This is what a fresh read would return.</span><span class="lab-storage-glyph" aria-hidden="true">↙︎</span></div>
         </div>
       </div>
       <div class="lab-queue"><span class="queue-symbol" aria-hidden="true">↳</span><div><span class="mono">Queued snapshot · revision 0</span><strong>Earlier draft</strong></div><span id="lab-queue-status" class="status">Waiting</span></div>
@@ -105,14 +105,14 @@
           <button type="button" data-source="service" aria-pressed="false"><span>03</span> Pass along</button>
           <button type="button" data-source="storage" aria-pressed="false"><span>04</span> Write</button>
         </div>
-        <div class="source-detail"><div><a id="lab-source-file" href="../../example/editor.py" target="_blank" rel="noopener noreferrer">editor.py · snapshot() ↗</a><span class="mono">Python excerpt</span></div><pre><code id="lab-source-code">return {'id': self.document_id, 'body': self.body, 'revision': self.revision}</code></pre><p id="lab-source-note">Each request carries the document ID, the text, and the revision it was based on.</p></div>
+        <div class="source-detail"><div><a id="lab-source-file" href="../../example/editor.py" target="_blank" rel="noopener noreferrer">editor.py · snapshot() ↗︎</a><span class="mono">Python excerpt</span></div><pre><code id="lab-source-code">return {'id': self.document_id, 'body': self.body, 'revision': self.revision}</code></pre><p id="lab-source-note">Each request carries the document ID, the text, and the revision it was based on.</p></div>
       </details>
       <p class="lab-footnote">Reload reads the simulated store. A conflicted draft stays open for comparison. Reset restarts with your paragraph; nothing persists beyond this page.</p>
       <span class="sr-only" id="lab-announcement" role="status" aria-live="polite" aria-atomic="true"></span>
     </div>
     <noscript><p>The interactive experiment needs JavaScript. These are the results of the same checked Python scenarios:</p><div class="table-scroll"><table><thead><tr><th scope="col">Scenario</th><th scope="col">Stored text</th><th scope="col">What happened</th></tr></thead><tbody><tr><th scope="row">Original</th><td>Earlier draft · revision 2</td><td>Both writes succeed. The older snapshot overwrites the finished paragraph.</td></tr><tr><th scope="row">Revision check</th><td>Finished paragraph · revision 1</td><td>The manual save succeeds; the stale autosave gets a conflict.</td></tr><tr><th scope="row">Autosave first</th><td>Earlier draft · revision 1</td><td>The manual save conflicts. “Finished paragraph” stays in the editor, unsaved.</td></tr></tbody></table></div><p><a href="../../example/editor.py">Capture the snapshot</a> → <a href="../../example/save_queue.py">Queue a copy</a> → <a href="../../example/documents.py">Pass it to storage</a> → <a href="../../example/storage.py">Check and write</a>.</p></noscript>
   </figure>
-  <div class="finding" data-reveal><span class="mono">The discovery</span><strong>Later <span class="not-equal">≠</span><br><span class="finding-word">newer.<svg viewBox="0 0 420 35" aria-hidden="true"><path d="M8 22 Q190 4 405 17 M20 31 Q192 15 393 25"/></svg></span></strong><p>The request order changed.<br>The age of the text didn’t.</p><span class="finding-mark" aria-hidden="true">✳</span></div>
+  <div class="finding" data-reveal><span class="mono">The discovery</span><strong>Later <span class="not-equal">≠</span><br><span class="finding-word">newer.<svg viewBox="0 0 420 35" aria-hidden="true"><path d="M8 22 Q190 4 405 17 M20 31 Q192 15 393 25"/></svg></span></strong><p>The request order changed.<br>The age of the text didn’t.</p><span class="finding-mark" aria-hidden="true">✳︎</span></div>
   <p>The finished paragraph reached the database. An older snapshot replaced it afterward.</p>
   <p>That changes where we should work. Reloading faithfully reads the value currently stored. The database accepted both writes. The missing rule is how to decide whether a request still has permission to replace the document.</p>
 
@@ -162,9 +162,9 @@ WHERE id = ? <mark>AND revision = ?</mark></code></pre></div>
   <p>You can ask the same questions in your own project:</p>
   <ul class="prompts"><li data-reveal>“What value does this action send?”</li><li data-reveal>“What else can write to the same place?”</li><li data-reveal>“What happens if those writes arrive in the opposite order?”</li></ul>
   <p>Start with one behavior you can recognize. Ask for the path, the competing writers, and a check you can run. By the end, “my text disappeared” should become a specific sequence you can explain—and a result you can verify.</p>
-  <a class="cta" href="https://github.com/axis-ve/KYCode#install" target="_blank" rel="noopener noreferrer">Try Know Your Code <span aria-hidden="true">↗</span></a>
+  <a class="cta" href="https://github.com/axis-ve/KYCode#install" target="_blank" rel="noopener noreferrer">Try Know Your Code <span aria-hidden="true">↗︎</span></a>
   <section class="sources" aria-labelledby="example-title"><h2 id="example-title">Run the example</h2><p class="example-download">The companion uses the Python standard library and temporary SQLite databases. <a href="../../example/saved-text-example.zip" download>Download the example</a>, extract it, and run:</p><div class="code-block"><pre><code>python3 -B demo.py</code></pre></div><p class="example-download">It checks the overwrite, the revision guard, both arrival orders, and conflicting editors. <a href="../../example/demo.py">Read the check</a> · <a href="../../example/storage.py">Read the database write</a></p></section>
 </main>
-<footer class="site-footer"><div><span>FOR THE “WAIT, WHY DOES THAT WORK?” PEOPLE.</span><a href="https://github.com/axis-ve/KYCode" target="_blank" rel="noopener noreferrer">GitHub ↗</a><span>A FEW MORE LIGHTBULBS.<span class="star">✳</span></span></div></footer>
+<footer class="site-footer"><div><span>FOR THE “WAIT, WHY DOES THAT WORK?” PEOPLE.</span><a href="https://github.com/axis-ve/KYCode" target="_blank" rel="noopener noreferrer">GitHub ↗︎</a><span>A FEW MORE LIGHTBULBS.<span class="star">✳︎</span></span></div></footer>
 </body>
 </html>

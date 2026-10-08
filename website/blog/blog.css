@@ -1,5 +1,4 @@
-/* Blog pages. Tokens and fonts mirror style.css; the landing page's element rules stay out of long-form pages. */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* Blog pages. Colours match the landing page's Codex theme; the landing page's element rules stay out of long-form pages. */
 :root{--blue:#244bff;--acid:#edff87;--white:#f4f5ee;--ink:#14212e;--deep:#172caf;--muted:#53616a;--soft:#d4dcff;--ease-out:cubic-bezier(.23,1,.32,1)}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}

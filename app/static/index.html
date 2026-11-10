@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KYCode Studio — talk with your codebase, publish the proof</title>
+<meta name="description" content="Talk with your codebase, prove what you learned, and publish it as a mini-podcast episode with a source-verified code path.">
+<script>try{var q=new URLSearchParams(location.search).get("theme");var t=q||localStorage.getItem("kyc:theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark")}catch(e){}</script>
+<meta name="theme-color" content="#171717">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%233b6fe0%27/%3E%3Ctext x=%2716%27 y=%2721%27 font-family=%27monospace%27 font-size=%2713%27 font-weight=%27700%27 fill=%27white%27 text-anchor=%27middle%27%3EKY%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/tokens.css">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></symbol>
+<symbol id="i-studio" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M7.5 16.5a6.4 6.4 0 0 1 0-9M16.5 7.5a6.4 6.4 0 0 1 0 9M4.9 19.1a10 10 0 0 1 0-14.2M19.1 4.9a10 10 0 0 1 0 14.2"/></symbol>
+<symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></symbol>
+<symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></symbol>
+<symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+<symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m11 12 10-10"/><path d="m15 6 3 3"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-5.5 8-5.5s6.5 1.5 8 5.5"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-rss" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1" fill="currentColor"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+<symbol id="i-route" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M12 19h4.5a3.5 3.5 0 0 0 0-7h-9a3.5 3.5 0 0 1 0-7H12"/></symbol>
+<symbol id="i-bug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l1.5 3M16 2l-1.5 3M12 13v8"/><path d="M19 13h3M19 17l2.5 2M5 13H2M5 17l-2.5 2"/><rect x="7" y="5" width="10" height="14" rx="5"/></symbol>
+<symbol id="i-quiz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+</defs></svg>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="mark">KY</span><span>KYCode Studio<small>Talk · Prove · Publish</small></span></div>
+    <div class="side-label">Workspace</div>
+    <nav class="side-nav">
+      <button class="side-item active" data-view="studio"><svg><use href="#i-studio"/></svg>Studio</button>
+      <button class="side-item" data-view="discover"><svg><use href="#i-compass"/></svg>Discover</button>
+      <button class="side-item" data-view="revenue"><svg><use href="#i-wallet"/></svg>Revenue</button>
+    </nav>
+    <div class="side-label">Your show</div>
+    <div class="frame"><div class="frame-panel" style="padding:.75rem">
+      <div class="text-sm" style="font-weight:600">Prove it in public</div>
+      <p class="text-xs muted" style="margin:.25rem 0 .625rem">Trace your code out loud, pass the quiz, publish the episode. The proof is the marketing.</p>
+      <button class="btn btn-primary btn-sm" id="sideStartBtn" style="width:100%">Start a walkthrough</button>
+    </div></div>
+    <div class="side-spacer"></div>
+    <button class="side-item" id="themeBtn"><svg><use href="#i-sun"/></svg>Theme</button>
+    <div class="creator-mini"><span class="avatar" id="avatarInit">D</span><span style="min-width:0"><span class="text-sm" style="font-weight:600;display:block" id="whoName">Demo Creator</span><span class="text-xs muted">@<span id="who">demo</span></span></span></div>
+  </aside>
+
+  <main class="main" id="main">
+    <div class="topbar">
+      <div class="crumbs">KYCode <span>/</span> <b id="crumb">Studio</b></div>
+      <div class="spacer"></div>
+      <span class="badge badge-outline" id="serverBadge">connecting…</span>
+      <button class="btn btn-primary btn-sm" id="topPublishBtn">Publish episode</button>
+    </div>
+
+    <div class="content">
+      <div id="banner" class="alert hidden" role="status"><svg><use href="#i-info"/></svg><span id="bannerText"></span></div>
+
+      <!-- STUDIO -->
+      <section id="view-studio" class="view">
+        <div class="page-head">
+          <h1>Talk with your codebase</h1>
+          <p>Start from something your app does. The agent traces the real code, you interrupt and steer, then publish the conversation as an episode with the verified path attached.</p>
+        </div>
+        <div class="studio-grid">
+          <div class="rail">
+            <div class="frame">
+              <div class="frame-header">Setup</div>
+              <div class="frame-panel">
+                <ol class="stepper" aria-label="Progress">
+                  <li class="step now" id="step-scan"><span class="dot">1</span>Scan</li><li class="step" aria-hidden="true"><span class="bar"></span></li>
+                  <li class="step" id="step-talk"><span class="dot">2</span>Talk</li><li class="step" aria-hidden="true"><span class="bar"></span></li>
+                  <li class="step" id="step-quiz"><span class="dot">3</span>Quiz</li><li class="step" aria-hidden="true"><span class="bar"></span></li>
+                  <li class="step" id="step-pub"><span class="dot">4</span>Publish</li>
+                </ol>
+                <div class="panel-title"><svg><use href="#i-folder"/></svg><h3>Project</h3></div>
+                <div class="field"><label for="projectPath">Project folder</label>
+                  <div class="input-group"><input class="input" id="projectPath" value="evals/fixtures/notes-app" spellcheck="false"><button class="btn btn-primary" id="scanBtn">Scan</button></div>
+                  <span class="hint" id="scanOut">Read-only. The Studio never changes files in your project.</span></div>
+                <hr class="separator">
+                <div class="panel-title"><svg><use href="#i-user"/></svg><h3>Creator</h3></div>
+                <div class="row wrap" style="margin-bottom:.5rem"><input class="input" id="handle" placeholder="handle" value="demo" aria-label="Handle"><input class="input" id="cname" placeholder="Display name" aria-label="Display name"></div>
+                <div class="row wrap" style="margin-bottom:.5rem"><input class="input" id="projectName" placeholder="Project name" aria-label="Project name"><input class="input" id="projectUrl" placeholder="Project URL" aria-label="Project URL"></div>
+                <textarea class="input" id="bio" rows="2" placeholder="Bio — what are you building, in public?"></textarea>
+                <hr class="separator">
+                <div class="panel-title"><svg><use href="#i-key"/></svg><h3>Model</h3><span class="spacer"></span><span class="badge badge-outline">Optional</span></div>
+                <div class="field"><label for="provider">Provider</label>
+                  <select class="input" id="provider"><option value="">Local tracer — no key needed</option><option value="openai">OpenAI (your key)</option><option value="anthropic">Anthropic (your key)</option></select></div>
+                <div class="row wrap"><input class="input" id="apiKey" type="password" placeholder="API key" aria-label="API key"><input class="input" id="model" placeholder="Model (optional)" aria-label="Model"></div>
+                <p class="text-xs muted" style="margin-top:.5rem">Keys are held for this tab session only and sent per request; they are never stored on the server. No key? The built-in tracer still walks your real code with file and line evidence.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="frame">
+            <div class="frame-header"><span class="rec-dot" id="recDot"></span>Conversation<span class="spacer"></span><span class="badge badge-outline" id="resume">ready</span></div>
+            <div class="frame-panel stage" style="padding:0">
+              <div class="stage-body" id="transcript" role="log" aria-live="polite" aria-label="Conversation"></div>
+              <div class="chips">
+                <button class="chip" data-chip="walk"><svg><use href="#i-route"/></svg>Walk me through Save</button>
+                <button class="chip" data-chip="diagnose"><svg><use href="#i-bug"/></svg>Why is it broken?</button>
+                <button class="chip" data-chip="quiz"><svg><use href="#i-quiz"/></svg>Quiz me</button>
+                <button class="chip" data-chip="cohost"><svg><use href="#i-studio"/></svg>Podcast mode</button>
+                <button class="chip" data-chip="jargon">Less jargon</button>
+                <button class="chip" data-chip="deeper">Go deeper</button>
+              </div>
+              <div class="composer">
+                <div class="composer-box">
+                  <button class="mic-btn" id="micBtn" title="Speak" aria-label="Speak"><svg><use href="#i-mic"/></svg></button>
+                  <input class="input" id="chatInput" placeholder="Ask what happens when you press Save…">
+                  <button class="btn btn-primary send-btn" id="sendBtn" aria-label="Send"><svg><use href="#i-send"/></svg></button>
+                </div>
+                <div class="composer-foot">
+                  <label class="switch-row"><input type="checkbox" id="speakToggle" checked>Speak replies</label>
+                  <span><span class="kbd">Enter</span> to send</span>
+                  <span id="voiceNote"></span>
+                  <span style="flex:1"></span>
+                  <button class="btn btn-outline btn-sm" id="recBtn">Record episode</button>
+                </div>
+                <p class="text-xs muted" id="recState" style="padding:.375rem .25rem 0">Recording captures your microphone. The agent's side stays in the transcript and can be narrated on the episode page.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rail rail-evidence">
+            <div class="frame">
+              <div class="frame-header">Evidence</div>
+              <div class="frame-panel">
+                <div class="panel-title"><svg><use href="#i-shield"/></svg><h3>Proof</h3></div>
+                <div id="proofBadge" class="proof-strip"><span class="badge badge-outline">No trace yet</span><span class="text-xs muted">Ask about a real action in your app.</span></div>
+                <hr class="separator">
+                <h3 style="margin-bottom:.625rem">Code path</h3>
+                <ol id="codePath" class="timeline"></ol>
+                <div id="codePathEmpty" class="empty">The verified path from action to storage will appear here, one hop at a time.</div>
+                <hr class="separator">
+                <h3 style="margin-bottom:.5rem">Stored data</h3>
+                <ul id="storedData" class="kv-list"><li class="muted">Nothing traced yet.</li></ul>
+                <h3 style="margin:.875rem 0 .5rem">Also reached by</h3>
+                <ul id="reach" class="kv-list"><li class="muted">Shared callers appear here before you call a change safe.</li></ul>
+                <h3 style="margin:.875rem 0 .25rem">Run it yourself</h3>
+                <div id="checks"><p class="text-xs muted">A runnable check lands here with the trace. Suggested by the Studio, run by you.</p></div>
+              </div>
+              <div class="frame-footer">Every hop is read from source. Inferences are labelled.</div>
+            </div>
+
+            <div class="frame" id="publishFrame">
+              <div class="frame-header">Publish</div>
+              <div class="frame-panel">
+                <div class="field"><label for="epTitle">Episode title</label><input class="input" id="epTitle" placeholder="What really happens when you press Save"></div>
+                <div class="field"><label for="epSummary">Show notes</label><textarea class="input" id="epSummary" rows="3" placeholder="What you learned, in your words. This sells the episode and your product."></textarea></div>
+                <div class="row wrap">
+                  <label class="inline-money">Price $<input class="input" id="epPrice" type="number" min="0" step="0.5" value="0"></label>
+                  <span style="flex:1"></span>
+                  <button class="btn btn-primary" id="publishBtn">Publish episode</button>
+                </div>
+                <div id="publishOut"></div>
+              </div>
+              <div class="frame-footer">Free by default. Paid needs Stripe — see Revenue.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DISCOVER -->
+      <section id="view-discover" class="view hidden">
+        <div class="page-head"><h1>Discover</h1><p>Builders talking through their own code, with the proof attached. Listen, check every line, back the ones who earn it.</p></div>
+        <div class="stats-row" id="statsRow"></div>
+        <div class="toolbar">
+          <div class="searchbox"><svg><use href="#i-search"/></svg><input class="input" id="search" placeholder="Search episodes, actions, creators…"></div>
+          <span class="badge badge-outline" id="discoverCount"></span>
+        </div>
+        <div id="episodeGrid" class="cards"></div>
+        <div class="section-title"><h2>Creators learning in public</h2></div>
+        <div id="creatorGrid" class="cards"></div>
+      </section>
+
+      <!-- EPISODE -->
+      <section id="view-episode" class="view hidden">
+        <button class="btn btn-ghost btn-sm" id="backBtn" style="margin-bottom:1rem"><svg><use href="#i-back"/></svg>Discover</button>
+        <div id="episodeDetail"></div>
+      </section>
+
+      <!-- REVENUE -->
+      <section id="view-revenue" class="view hidden">
+        <div class="page-head"><h1>Revenue</h1><p>Your podcast is your funnel: episodes link your product, and listeners can tip, subscribe, or buy. Only Stripe-confirmed payments ever appear here.</p></div>
+        <div id="stripeState"></div>
+        <div class="stats-row" id="revenueStats"></div>
+        <div class="frame" style="margin-bottom:1rem">
+          <div class="frame-header">Pricing and payouts</div>
+          <div class="frame-panel">
+            <div class="row wrap">
+              <label class="inline-money">Tip $<input class="input" id="tipPrice" type="number" min="1" step="1" value="5"></label>
+              <label class="inline-money">Subscribe $/mo<input class="input" id="subPrice" type="number" min="1" step="1" value="9"></label>
+              <input class="input" id="stripeAccount" placeholder="Stripe connected account (acct_…)" style="flex:1;min-width:14rem">
+              <button class="btn btn-primary" id="saveCreatorBtn">Save creator and prices</button>
+            </div>
+            <p class="text-xs muted" style="margin-top:.625rem">Checkout is hosted by Stripe. With a connected account, payouts land with you and the platform keeps 10%.</p>
+          </div>
+        </div>
+        <div class="frame">
+          <div class="frame-header">Sales</div>
+          <div class="frame-panel" style="padding:0;overflow:hidden"><div id="salesOut"></div></div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="foot"><span>KYCode Studio</span><span>Grounded by the know-your-code skill</span><span>Read-only on your code</span><span style="flex:1"></span><span>Keys never leave this browser except to your chosen provider</span></footer>
+  </div>
+</main>
+<script src="/app.js" defer></script>
+</body>
+</html>

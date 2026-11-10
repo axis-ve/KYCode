@@ -104,3 +104,13 @@ website/logo.svg
 website/perlin-noise.png
 website/style.css
 website/voice-orb.js
+app/README.md
+app/server.py
+app/static/app.js
+app/static/index.html
+app/static/style.css
+tests/test_studio.py
+app/DESIGN-WORK-ORDER.md
+app/gen_tokens.py
+app/tokens.json
+app/static/tokens.css

@@ -13,3 +13,6 @@ evals/runs/
 /release-copy/
 /scratch-checkout/
 /know-your-code.zip
+
+/app/studio.db*
+/app/media/

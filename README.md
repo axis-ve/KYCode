@@ -183,6 +183,16 @@ Wait for my answer before explaining.
 
 Read the [skill instructions](skills/know-your-code/SKILL.md), try the [behavioral evaluation cases](evals/README.md), or see [Contributing](CONTRIBUTING.md) to report a problem and run the repository checks.
 
+## Studio (companion app)
+
+[KYCode Studio](app/README.md) is the harness that goes with the skills: a local-first app where you talk with your codebase by voice or text, get quizzed on the real code path, record the conversation, and publish it as a mini-podcast episode with the source-verified proof attached — discoverable episode pages, RSS, embeds, and Stripe tips, subscriptions, and paid episodes included. Run it from this repository:
+
+```sh
+python3 app/server.py
+```
+
+Open `http://127.0.0.1:8765/`. No installs or build step; an optional OpenAI or Anthropic key upgrades the answers, and the built-in tracer works without one.
+
 ## Website
 
 The [static website](website/README.txt) includes the landing page, two articles, and a working editor simulation of a delayed autosave. Preview it from this repository:
